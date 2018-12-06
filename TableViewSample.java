@@ -1,3 +1,5 @@
+package application;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,59 +18,95 @@ public class TableViewSample {
         protein.setFont(new Font("Comic Sans", 12));
         
         GridPane gridPane = new GridPane();
-
-        ComboBox<String> calorieBox = new ComboBox<String>();
-        calorieBox.getItems().add("<");
-        calorieBox.getItems().add(">");
-        calorieBox.getItems().add("=");
-
-        ComboBox<String> fiberBox = new ComboBox<String>();
-        fiberBox.getItems().add("<");
-        fiberBox.getItems().add(">");
-        fiberBox.getItems().add("=");
-
-        ComboBox<String> fatBox = new ComboBox<String>();
-        fatBox.getItems().add("<");
-        fatBox.getItems().add(">");
-        fatBox.getItems().add("=");
+        TextField foodSearch = new TextField();
+        foodSearch.setPrefColumnCount(10);
+        foodSearch.setEditable(true);
+        foodSearch.setText("Search");
         
-        ComboBox<String> proteinBox = new ComboBox<String>();
-        proteinBox.getItems().add("<");
-        proteinBox.getItems().add(">");
-        proteinBox.getItems().add("=");
+        Button analyzeButton = new Button("Analyze");
         
-        TextField calorieText = new TextField();
-        calorieText.setPrefColumnCount(10);
-        calorieText.setEditable(true);
-        calorieText.setText("Enter Calories");
+//        ComboBox<String> calorieBox = new ComboBox<String>();
+//        calorieBox.getItems().add("<");
+//        calorieBox.getItems().add(">");
+//        calorieBox.getItems().add("=");
+//
+//        ComboBox<String> fiberBox = new ComboBox<String>();
+//        fiberBox.getItems().add("<");
+//        fiberBox.getItems().add(">");
+//        fiberBox.getItems().add("=");
+//
+//        ComboBox<String> fatMinBox = new ComboBox<String>();
+//        fatMinBox.getItems().add("<");
+//        fatMinBox.getItems().add(">");
+//        fatMinBox.getItems().add("=");
+//        
+//        ComboBox<String> proteinMinBox = new ComboBox<String>();
+//        proteinMinBox.getItems().add("<");
+//        proteinMinBox.getItems().add(">");
+//        proteinMinBox.getItems().add("=");
+        
+        TextField calorieMinText = new TextField();
+        calorieMinText.setPrefColumnCount(10);
+        calorieMinText.setEditable(true);
+        calorieMinText.setText("Min Calories");
+        
+        TextField calorieMaxText = new TextField();
+        calorieMaxText.setPrefColumnCount(10);
+        calorieMaxText.setEditable(true);
+        calorieMaxText.setText("Max Calories");
        
-        TextField fiberText = new TextField();
-        fiberText.setPrefColumnCount(10);
-        fiberText.setEditable(true);
-        fiberText.setText("Enter Fiber");
+        TextField fiberMinText = new TextField();
+        fiberMinText.setPrefColumnCount(10);
+        fiberMinText.setEditable(true);
+        fiberMinText.setText("Min Fiber");
         
-        TextField fatText = new TextField();
-        fatText.setPrefColumnCount(10);
-        fatText.setEditable(true);
-        fatText.setText("Enter Protein");
+        TextField fiberMaxText = new TextField();
+        fiberMaxText.setPrefColumnCount(10);
+        fiberMaxText.setEditable(true);
+        fiberMaxText.setText("Max Fiber");
         
-        TextField proteinText = new TextField();
-        proteinText.setPrefColumnCount(10);
-        proteinText.setEditable(true);
-        proteinText.setText("Enter Protein");
+        TextField fatMinText = new TextField();
+        fatMinText.setPrefColumnCount(10);
+        fatMinText.setEditable(true);
+        fatMinText.setText("Min Fat");
+        
+        TextField fatMaxText = new TextField();
+        fatMaxText.setPrefColumnCount(10);
+        fatMaxText.setEditable(true);
+        fatMaxText.setText("Max Fat");
+        
+        TextField proteinMinText = new TextField();
+        proteinMinText.setPrefColumnCount(10);
+        proteinMinText.setEditable(true);
+        proteinMinText.setText("Min Protein");
+        
+        TextField proteinMaxText = new TextField();
+        proteinMaxText.setPrefColumnCount(10);
+        proteinMaxText.setEditable(true);
+        proteinMaxText.setText("Max Protein");
         
         gridPane.add(calorie, 0, 0);
-        gridPane.add(calorieBox, 0, 1);
+        gridPane.add(calorieMinText, 0, 1);
+        gridPane.add(calorieMaxText, 1, 1);
+        //gridPane.add(calorieBox, 0, 1);
         gridPane.add(fiber, 0, 2);
-        gridPane.add(fiberBox, 0, 3); //edited
+        gridPane.add(fiberMinText, 0, 3);
+        gridPane.add(fiberMaxText, 1, 3);
+        //gridPane.add(fiberBox, 0, 3); //edited
         gridPane.add(fat, 0, 4);
-        gridPane.add(fatBox,0 , 5);
+        gridPane.add(fatMinText, 0, 5);
+        gridPane.add(fatMaxText, 1, 5);
+        //gridPane.add(fatMinBox,0 , 5);
         gridPane.add(protein, 0, 6);
-        gridPane.add(proteinBox, 0, 7);
-        gridPane.add(calorieText, 1, 1);
-        gridPane.add(fiberText, 1, 3);
-        gridPane.add(fatText, 1, 5);
-        gridPane.add(proteinText, 1, 7);
+        gridPane.add(proteinMinText, 0, 7);
+        gridPane.add(proteinMaxText, 1, 7);
+        gridPane.add(analyzeButton, 1, 9);
+        //gridPane.add(proteinMinBox, 0, 7);
+        
+       
+        //gridPane.add(fatText, 1, 5);
+        
+        gridPane.add(foodSearch,0,9);
         
         gridPane.setLayoutX(10);
         gridPane.setLayoutY(120);
