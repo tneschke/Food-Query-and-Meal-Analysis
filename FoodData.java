@@ -1,5 +1,14 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class represents the backend for managing all 
@@ -30,7 +39,37 @@ public class FoodData implements FoodDataADT<FoodItem> {
      */
     @Override
     public void loadFoodItems(String filePath) {
-        // TODO : Complete
+        BufferedReader br = null;
+        String line = "";
+        try {
+            br = new BufferedReader(new FileReader(filePath));
+            while ((line = br.readLine()) != null) {
+
+                String[] data = line.split(",");
+                FoodItem newFood = new FoodItem(data[0],data[1]);
+                for(int i = 2; i < 12; i+=2 ) {
+                	newFood.addNutrient(data[i], Double.parseDouble(data[i+1]));
+                }
+                foodItemList.add(newFood);
+
+            }
+
+        } 
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } 
+        catch (IOException e) {
+            e.printStackTrace();         
+        } 
+        finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     /*
@@ -39,8 +78,11 @@ public class FoodData implements FoodDataADT<FoodItem> {
      */
     @Override
     public List<FoodItem> filterByName(String substring) {
-        // TODO : Complete
-        return null;
+    	List<FoodItem> newList = new LinkedList<FoodItem>();
+        for(FoodItem food : foodItemList) {
+        	if(food.getName().contains(substring)) newList.add(food);
+        }
+        return newList;
     }
 
     /*
@@ -49,8 +91,22 @@ public class FoodData implements FoodDataADT<FoodItem> {
      */
     @Override
     public List<FoodItem> filterByNutrients(List<String> rules) {
-        // TODO : Complete
-        return null;
+    	List<FoodItem> newList = new LinkedList<FoodItem>();
+    	for(FoodItem food : foodItemList) {
+    		newList.add(food);
+    	}
+    	
+    	newList = foodItemList;
+        for (String rule : rules) {
+        	String[] ruleArray = rule.split("\\s+");
+        	for(FoodItem food : foodItemList) {
+            	if(food.getNutrientValue(ruleArray[0]) < (Double.parseDouble(ruleArray[1]))
+            			&& food.getNutrientValue(ruleArray[0]) > (Double.parseDouble(ruleArray[2]))) {
+            		newList.remove(food);
+            	}
+            }
+        }
+        return newList;
     }
 
     /*
@@ -59,7 +115,7 @@ public class FoodData implements FoodDataADT<FoodItem> {
      */
     @Override
     public void addFoodItem(FoodItem foodItem) {
-        // TODO : Complete
+        foodItemList.add(foodItem);
     }
 
     /*
@@ -68,15 +124,62 @@ public class FoodData implements FoodDataADT<FoodItem> {
      */
     @Override
     public List<FoodItem> getAllFoodItems() {
-        // TODO : Complete
-        return null;
+        return foodItemList;
+        
     }
 
 
 	@Override
 	public void saveFoodItems(String filename) {
-		// TODO Auto-generated method stub
 		
+		//creates new identical list
+		List<FoodItem> newList = new LinkedList<FoodItem>();
+    	for(FoodItem food : foodItemList) {
+    		newList.add(food);
+    	}
+    	
+    	//sorts list by name of foods
+		Collections.sort(newList, new Comparator<FoodItem>() {
+		    @Override
+		    public int compare(FoodItem one, FoodItem two) {
+		        return one.getName().compareTo(two.getName());
+		    }
+		});
+		
+		//saves list to csv file
+		FileWriter fileWriter = null;
+		try {
+			fileWriter = new FileWriter(filename);
+			for (FoodItem food : newList) {
+				fileWriter.append((food.getID()));
+				fileWriter.append(",");
+				fileWriter.append(food.getName());
+				
+				HashMap<String,Double> nutrients = food.getNutrients();
+				for (Map.Entry<String, Double> entry : nutrients.entrySet()) {
+					fileWriter.append(",");
+					fileWriter.append(entry.getKey());
+					fileWriter.append(",");
+					fileWriter.append(String.valueOf(entry.getValue()));			    
+				}
+				fileWriter.append("\n");
+			}
+			
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		} 
+		finally {
+			try {
+				fileWriter.flush();
+				fileWriter.close();
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+
 	}
 
 }
