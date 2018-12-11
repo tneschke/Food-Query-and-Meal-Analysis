@@ -218,33 +218,23 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
          * (non-Javadoc)
          * @see BPTree.Node#insert(java.lang.Comparable, java.lang.Object)
          */
-        void insert(K key, V value) {       //needs fixing
-            Node child = getChild(key);
-            child.insert(key, value);
-            if (child.isOverflow()) {
-                Node brother = child.split();
-                int valueIndex;
-                int locate = Collections.binarySearch(keys, key);
-                if(locate >= 0)
-                    valueIndex = locate + 1;
-                else
-                    valueIndex = -locate - 1;
-                
-                if(locate >= 0)
-                    children.set(valueIndex, brother);
-                else {
-                    keys.add(valueIndex,child.getFirstLeafKey());
-                    children.set(valueIndex, brother);
+        void insert(K key, V value) {           
+                Node child = getChild(key);
+                child.insert(key, value);
+                if(child.isOverflow()) {
+                    Node brother = child.split();
+                    insertChild(brother.getFirstLeafKey(), brother);
+                    if(this.isOverflow()) {
+                            internalNodeOverflowHelper();
+                    }
                 }
-                
             }
-        }
         
         /**
          * (non-Javadoc)
          * @see BPTree.Node#split()
          */
-        Node split() {      //Pretty sure working as intended
+        Node split() {
             int from = keys.size() / 2 + 1;
             int to = keys.size();
             InternalNode brother = new InternalNode(); // new node to hold split keys and children
@@ -262,20 +252,35 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
          * (non-Javadoc)
          * @see BPTree.Node#rangeSearch(java.lang.Comparable, java.lang.String)
          */
-        List<V> rangeSearch(K key, String comparator) { //Pretty sure working as intended
+        List<V> rangeSearch(K key, String comparator) {
             return getChild(key).rangeSearch(key, comparator);
         }
         
+        private void internalNodeOverflowHelper() {
+            Node intBrother = split();
+            InternalNode newRoot = new InternalNode();
+            newRoot.keys.add(intBrother.getFirstLeafKey());
+            newRoot.children.add(this);
+            newRoot.children.add(intBrother);
+            root = newRoot;
+        }
+        
+        private void insertChild(K key, Node child) {
+            int result = Collections.binarySearch(keys, key);
+            if(result >= 0) {
+                children.add(result + 1, child);
+            } else {
+                keys.add(-result - 1, key);
+                children.add(-result, child);
+            }
+        }
         //Returns the node located at Key.
         private Node getChild(K key) {      //Needs fixing
-            int valueIndex;
-            int locate = Collections.binarySearch(keys, key);
-            if(locate >= 0) {
-                valueIndex = locate;
-                return children.get(valueIndex);
+            int result = Collections.binarySearch(keys, key);
+            if(result >= 0) { //If the key is found return the child 
+                return children.get(result + 1);
             }
-            //Not found
-            return null;
+            return children.get(-result - 1);
         }
     
     } // End of class InternalNode
@@ -299,6 +304,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
         
         // Reference to the previous leaf node
         LeafNode previous;
+        
         
         /**
          * Package constructor
@@ -329,38 +335,36 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
          * (non-Javadoc)
          * @see BPTree.Node#insert(Comparable, Object)
          */
-        void insert(K key, V value) { //Needs fixing
-            int valueIndex;
-            int locate = Collections.binarySearch(keys, key);
-            if(locate >= 0)
-                valueIndex = locate;
-            else
-                valueIndex = -locate - 1;
-            
-            //If key was found within the list update the value
-            if(locate >= 0) {
-                keys.add(valueIndex,key);
-                values.add(valueIndex, value);
-            } else { //If not add the key and set the value
-                keys.add(valueIndex,key);
-                values.add(valueIndex, value);
-            }
-            
-            if(root.isOverflow()) {
-                Node brother = split();
-                InternalNode newRoot = new InternalNode();
-                newRoot.keys.add(brother.getFirstLeafKey());
-                newRoot.children.add(this);
-                newRoot.children.add(brother);
-                root = newRoot;
-            }
-        }
+        void insert(K key, V value) {          
+            int result = Collections.binarySearch(keys, key);
+                if(result >= 0) {
+                    keys.add((result + 1),key);
+                    values.add((result + 1), value);
+                } else {
+                    if(keys.size()==0) {
+                        keys.add(0,key);
+                        values.add(0,value);
+                    } else {
+                        keys.add(-result - 1,key);
+                        values.add(-result - 1,value);
+                    }
+                }
+                if(this.isOverflow()) {
+                    Node brother = split();
+                    InternalNode newRoot = new InternalNode();
+                        newRoot.keys.add(brother.getFirstLeafKey());
+                        newRoot.children.add(this);
+                        newRoot.children.add(brother);
+                        root = newRoot;
+                }
+                    
+               }
         
         /**
          * (non-Javadoc)
          * @see BPTree.Node#split()
          */
-        Node split() { //working
+        Node split() {
             int from = (keys.size() + 1) / 2;
             int to = keys.size();
             LeafNode brother = new LeafNode();
@@ -380,7 +384,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
          * (non-Javadoc)
          * @see BPTree.Node#rangeSearch(Comparable, String)
          */
-        List<V> rangeSearch(K key, String comparator) { //Pretty sure works as intended.
+        List<V> rangeSearch(K key, String comparator) {
             List<V> filteredList = new LinkedList<V>();
             LeafNode curr = this;
             while(curr != null) {
