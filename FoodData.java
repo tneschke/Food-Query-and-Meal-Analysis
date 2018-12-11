@@ -43,7 +43,7 @@ public class FoodData implements FoodDataADT<FoodItem> {
         String line = "";
         try {
             br = new BufferedReader(new FileReader(filePath));
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null || line != ",,,,,,,,,,,") {
 
                 String[] data = line.split(",");
                 FoodItem newFood = new FoodItem(data[0],data[1]);
@@ -56,7 +56,7 @@ public class FoodData implements FoodDataADT<FoodItem> {
 
         } 
         catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.err.print("File does not exist!");
         } 
         catch (IOException e) {
             e.printStackTrace();         
@@ -93,7 +93,7 @@ public class FoodData implements FoodDataADT<FoodItem> {
     public List<FoodItem> filterByNutrients(List<String> rules) {
     	List<FoodItem> newList = new LinkedList<FoodItem>();
     	for(FoodItem food : foodItemList) {
-    		newList.add(food);
+    		newList.add(food); 
     	}
     	
     	newList = foodItemList;
