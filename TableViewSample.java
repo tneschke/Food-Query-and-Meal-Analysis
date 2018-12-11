@@ -9,21 +9,25 @@ import javafx.scene.text.Font;
 public class TableViewSample {
     public GridPane start() {
         final Label calorie = new Label("Calories");
-        calorie.setFont(new Font("Comic Sans", 12));
+        calorie.setFont(new Font("Comic Sans", 16));
         final Label fiber = new Label("Fiber");
         fiber.setFont(new Font("Comic Sans", 12));
         final Label fat = new Label("Fat");
         fat.setFont(new Font("Comic Sans", 12));
         final Label protein = new Label("Protein");
         protein.setFont(new Font("Comic Sans", 12));
+        final Label search = new Label("Search By Name");
+        search.setFont(new Font("Comic Sans", 12));
         
         GridPane gridPane = new GridPane();
+        
         TextField foodSearch = new TextField();
         foodSearch.setPrefColumnCount(10);
         foodSearch.setEditable(true);
         foodSearch.setText("Search");
         
         Button analyzeButton = new Button("Analyze");
+        
         
 //        ComboBox<String> calorieBox = new ComboBox<String>();
 //        calorieBox.getItems().add("<");
@@ -48,6 +52,7 @@ public class TableViewSample {
         TextField calorieMinText = new TextField();
         calorieMinText.setPrefColumnCount(10);
         calorieMinText.setEditable(true);
+        
         calorieMinText.setText("Min Calories");
         
         TextField calorieMaxText = new TextField();
@@ -100,10 +105,30 @@ public class TableViewSample {
         gridPane.add(protein, 0, 6);
         gridPane.add(proteinMinText, 0, 7);
         gridPane.add(proteinMaxText, 1, 7);
-        gridPane.add(analyzeButton, 1, 9);
+        gridPane.add(analyzeButton, 0,10 );
         //gridPane.add(proteinMinBox, 0, 7);
         
-       
+       //rules
+        String calMinRule;
+        String calMaxRule;
+        String fiberMinRule;
+        String fiberMaxRule;
+        String fatMinRule;
+        String fatMaxRule;
+        
+        String proteinRule;
+        
+//        if((caloriesMaxEvent == null && caloriesMinEvent != null) || minCal == maxCal) {
+//            calMinRule = "calories == "+ minCal;
+//            calMaxRule = calMinRule;
+//        }
+//        if(caloriesMaxEvent != null && caloriesMinEvent != null) {
+//            calMinRule = "calories >= " + minCal;
+//            calMaxRule = "calories <= " + maxCal;
+//            
+//        }
+        
+        
         //gridPane.add(fatText, 1, 5);
         
         gridPane.add(foodSearch,0,9);
