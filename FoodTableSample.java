@@ -9,13 +9,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -29,6 +27,11 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+/**
+ * This class constructs the two main tables in this program. 
+ * 
+ * @author aka
+ */
 public class FoodTableSample {
 	private final TableView<FoodItem> table;
 	private final ObservableList<FoodItem> data;
@@ -54,7 +57,7 @@ public class FoodTableSample {
         table.setEditable(true);
         table.setMaxHeight(300);
         
-
+        //the following code below creates the header columns for the tables 
         TableColumn nameCol = new TableColumn("Name");
         nameCol.setMinWidth(100);
         nameCol.setCellValueFactory(
@@ -71,8 +74,8 @@ public class FoodTableSample {
           new PropertyValueFactory<>("fat"));
           
           TableColumn carbsCol = new TableColumn("Carbs");
-          fatCol.setMinWidth(100);
-           fatCol.setCellValueFactory(
+          carbsCol.setMinWidth(100);
+           carbsCol.setCellValueFactory(
            new PropertyValueFactory<>("carbs"));
 
         TableColumn fiberCol = new TableColumn("Fiber");
@@ -104,6 +107,7 @@ public class FoodTableSample {
         table.setItems(data);
         table.getColumns().addAll(nameCol, caloriesCol, fatCol, carbsCol, fiberCol, proteinCol,actionCol);
 
+        // the following code below creates text fields for all the attributes of a food item 
         final TextField addName = new TextField();
         addName.setPromptText("Name");
         addName.setMaxWidth(nameCol.getPrefWidth());
@@ -117,8 +121,8 @@ public class FoodTableSample {
         addFat.setPromptText("Fat");
         
         final TextField addCarbs = new TextField();
-        addFat.setMaxWidth(carbsCol.getPrefWidth());
-        addFat.setPromptText("Carbs");
+        addCarbs.setMaxWidth(carbsCol.getPrefWidth());
+        addCarbs.setPromptText("Carbs");
         
         final TextField addFiber = new TextField();
         addFiber.setMaxWidth(fiberCol.getPrefWidth());
