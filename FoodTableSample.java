@@ -103,6 +103,8 @@ public class FoodTableSample {
 
          TableColumn addItemCol = new TableColumn("Add Item");
          addItemCol.setMinWidth(100);
+	 addItemCol.setCellValueFactory(new PropertyValueFactory<>("add item"));
+
 
         table.setItems(data);
         table.getColumns().addAll(nameCol, caloriesCol, fatCol, carbsCol, fiberCol, proteinCol,actionCol);
