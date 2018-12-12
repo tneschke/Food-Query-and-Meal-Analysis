@@ -218,7 +218,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
          * @see BPTree.Node#insert(java.lang.Comparable, java.lang.Object)
          */
         void insert(K key, V value) {           
-                Node child = getChild(key); 
+                Node child = getChild(key); // Returns correct LeafNode for (Key,Value)
                 child.insert(key, value);
                 if(child.isOverflow()) {
                     if(this.equals(root)) {
@@ -495,16 +495,23 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
         // just that it functions as a data structure with
         // insert, rangeSearch, and toString() working.
         List<Double> list = new ArrayList<>();
-        for (double i = 1; i <= 40; i++) {
-            double p = rnd1.nextInt(20) + 1;
+        for (int i = 0; i < 40; i++) {
+            Double j = dd[rnd1.nextInt(4)];
+            System.out.print("\nInserted Pair: " + "(" + j + ", " + j + ")");
+            list.add(j);
+            bpTree.insert(j, j);
+            System.out.println("\n\nTree structure:\n" + bpTree.toString());
+        }
+        /*for (double i = 1; i <= 400; i++) {
+            double p = rnd1.nextInt(400) + 1;
             Double j = dd[rnd1.nextInt(4)];
             System.out.print("\nInserted Pair: " + "(" + p + ", " + p + ")");
             list.add(p);
             bpTree.insert(p, p);
             System.out.println("\n\nTree structure:\n" + bpTree.toString());
-            
-            List<Double> filteredValues = bpTree.rangeSearch(0d,">=");
-            System.out.println("Filtered values: " + filteredValues.toString());
         	}
+        	*/
+        List<Double> filteredValues = bpTree.rangeSearch(0d,">=");
+        System.out.println("Filtered values: " + filteredValues.toString());
         }
     }// End of class BPTree
