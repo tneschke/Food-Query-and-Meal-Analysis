@@ -9,11 +9,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -28,29 +30,30 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class FoodTableSample {
-    private final TableView<FoodItem> table;
-    private final ObservableList<FoodItem> data;
-    private Stage stage;
-    private int x;
-    private int y;
-    final HBox hb;
-    private TableColumn<FoodItem, ?> addItemcCol;
-    
-    public FoodTableSample(Stage stage, int x, int y) {
-        this.x = x;
-        this.y = y; 
-        table = new TableView<>();
-        data = FXCollections.observableArrayList(new FoodItem("Turnip", "20", "3", "2", "5"));
-        hb = new HBox();
-        this.stage = stage;
-    }
+	private final TableView<FoodItem> table;
+	private final ObservableList<FoodItem> data;
+	private Stage stage;
+	private int x;
+	private int y;
+	final HBox hb;
+	private TableColumn<FoodItem, ?> addItemcCol;
 
-    public TableView<FoodItem> start() {
+	public FoodTableSample(Stage stage, int x, int y) {
+		this.x = x;
+		this.y = y;
+		table = new TableView<>();
+		data = FXCollections.observableArrayList(new FoodItem("Turnip", "20", "3", "2", "5", "7"));
+		hb = new HBox();
+		this.stage = stage;
+	}
+
+	public TableView<FoodItem> start() {
         Scene scene = new Scene(new Group());
         final Label label = new Label("Food Items");
         label.setFont(new Font("Arial", 20));
         table.setEditable(true);
         table.setMaxHeight(300);
+        
 
         TableColumn nameCol = new TableColumn("Name");
         nameCol.setMinWidth(100);
@@ -61,16 +64,21 @@ public class FoodTableSample {
         caloriesCol.setMinWidth(100);
          caloriesCol.setCellValueFactory(
          new PropertyValueFactory<>("calories"));
+         
+         TableColumn fatCol = new TableColumn("Fat");
+         fatCol.setMinWidth(100);
+          fatCol.setCellValueFactory(
+          new PropertyValueFactory<>("fat"));
+          
+          TableColumn carbsCol = new TableColumn("Carbs");
+          fatCol.setMinWidth(100);
+           fatCol.setCellValueFactory(
+           new PropertyValueFactory<>("carbs"));
 
         TableColumn fiberCol = new TableColumn("Fiber");
         fiberCol.setMinWidth(100);
          fiberCol.setCellValueFactory(
          new PropertyValueFactory<>("fiber"));
-
-        TableColumn fatCol = new TableColumn("Fat");
-        fatCol.setMinWidth(100);
-         fatCol.setCellValueFactory(
-         new PropertyValueFactory<>("fat"));
 
         TableColumn proteinCol = new TableColumn("Protein");
         proteinCol.setMinWidth(100);
@@ -92,24 +100,30 @@ public class FoodTableSample {
 
          TableColumn addItemCol = new TableColumn("Add Item");
          addItemCol.setMinWidth(100);
-         proteinCol.setCellValueFactory(
-         new PropertyValueFactory<>("lastName"));
 
         table.setItems(data);
-        table.getColumns().addAll(nameCol, caloriesCol, fiberCol, fatCol, proteinCol,actionCol);
+        table.getColumns().addAll(nameCol, caloriesCol, fatCol, carbsCol, fiberCol, proteinCol,actionCol);
 
         final TextField addName = new TextField();
         addName.setPromptText("Name");
         addName.setMaxWidth(nameCol.getPrefWidth());
+        
         final TextField addCalories = new TextField();
         addCalories.setMaxWidth(caloriesCol.getPrefWidth());
         addCalories.setPromptText("Calories");
-        final TextField addFiber = new TextField();
-        addFiber.setMaxWidth(fiberCol.getPrefWidth());
-        addFiber.setPromptText("Fiber");
+        
         final TextField addFat = new TextField();
         addFat.setMaxWidth(fatCol.getPrefWidth());
         addFat.setPromptText("Fat");
+        
+        final TextField addCarbs = new TextField();
+        addFat.setMaxWidth(carbsCol.getPrefWidth());
+        addFat.setPromptText("Carbs");
+        
+        final TextField addFiber = new TextField();
+        addFiber.setMaxWidth(fiberCol.getPrefWidth());
+        addFiber.setPromptText("Fiber");
+        
         final TextField addProtein = new TextField();
         addProtein.setMaxWidth(proteinCol.getPrefWidth());
         addProtein.setPromptText("Protein");
@@ -118,17 +132,18 @@ public class FoodTableSample {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                data.add(new FoodItem(addName.getText(), addCalories.getText(), addFiber.getText(),
-                        addFat.getText(), addProtein.getText()));
+                data.add(new FoodItem(addName.getText(), addCalories.getText(), addFat.getText(), addCarbs.getText(), addFiber.getText(),
+                        addProtein.getText()));
                 addName.clear();
                 addCalories.clear();
                 addFiber.clear(); 
                 addFat.clear();
                 addProtein.clear(); 
+                addCarbs.clear(); 
             }
         });
 
-        hb.getChildren().addAll(addName, addCalories, addFiber, addFat, addProtein, addButton);
+        hb.getChildren().addAll(addName, addCalories, addFat, addCarbs, addFiber, addProtein, addButton);
         hb.setSpacing(3);
 
         final VBox vbox = new VBox();
@@ -141,79 +156,91 @@ public class FoodTableSample {
         table.setLayoutY(y);
         return table;
     }
-    
-    private class AddItemCell extends TableCell<FoodItem, Boolean> {
-        final Button addButton = new Button("+/-");
-        final StackPane paddedButton = new StackPane();
-        final DoubleProperty buttonY = new SimpleDoubleProperty();
-        
-        AddItemCell(final Stage stage, final TableView table) {
-            paddedButton.setPadding(new Insets(3));
-            paddedButton.getChildren().add(addButton);
-            addButton.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override public void handle(MouseEvent mouseEvent) {
-                    buttonY.set(mouseEvent.getScreenY());;
-                }
-            });
-                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-                setGraphic(paddedButton);
-            }
-    }
 
-    public static class FoodItem {
-        private String name;
-        private String calories;
-        private String fiber;
-        private String fat;
-        private String protein;
+	private class AddItemCell extends TableCell<FoodItem, Boolean> {
+		final Button addButton = new Button("+/-");
+		final StackPane paddedButton = new StackPane();
+		final DoubleProperty buttonY = new SimpleDoubleProperty();
 
-        private FoodItem(String name, String calories, String fiber, String fat, String protein) {
-            this.name = name;
-            this.calories = calories;
-            this.fiber = fiber;
-            this.fat = fat;
-            this.protein = protein;
-        }
+		AddItemCell(final Stage stage, final TableView table) {
+			paddedButton.setPadding(new Insets(3));
+			paddedButton.getChildren().add(addButton);
+			addButton.setOnMousePressed(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					buttonY.set(mouseEvent.getScreenY());
+					;
+				}
+			});
+			setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+			setGraphic(paddedButton);
+		}
+	}
 
-        public String getName() {
-            return this.name;
-        }
+	public static class FoodItem {
+		private String name;
+		private String calories;
+		private String fiber;
+		private String fat;
+		private String protein;
+		private String carbs;
 
-        public void setName(String name) {
-            this.name = name;
-        }
+		private FoodItem(String name, String calories, String fat, String carbs, String fiber, String protein) {
+			this.name = name;
+			this.calories = calories;
+			this.fiber = fiber;
+			this.fat = fat;
+			this.protein = protein;
+			this.carbs = carbs;
+		}
 
-        public String getCalories() {
-            return this.calories;
-        }
+		public String getName() {
+			return this.name;
+		}
 
-        public void setCalories(String calories) {
-            this.calories = calories;
-        }
+		public void setName(String name) {
+			this.name = name;
+		}
 
-        public String getFiber() {
-            return this.fiber;
-        }
+		public String getCalories() {
+			return this.calories;
+		}
 
-        public void setFiber(String fiber) {
-            this.fiber = fiber;
-        }
+		public void setCalories(String calories) {
+			this.calories = calories;
+		}
 
-        public String getFat() {
-            return this.fat;
-        }
+		public String getFiber() {
+			return this.fiber;
+		}
 
-        public void setFat(String fat) {
-            this.fat = fat;
-        }
+		public void setFiber(String fiber) {
+			this.fiber = fiber;
+		}
 
-        public String getProtein() {
-            return this.protein;
-        }
+		public String getFat() {
+			return this.fat;
+		}
 
-        public void setProtein(String protein) {
-            this.protein = protein;
-        }
+		public void setFat(String fat) {
+			this.fat = fat;
+		}
 
-    }
+		public String getProtein() {
+			return this.protein;
+		}
+
+		public void setProtein(String protein) {
+			this.protein = protein;
+		}
+
+		public String getCarbs() {
+			return this.protein;
+		}
+
+		public void setCarbs(String carbs) {
+			this.carbs = carbs;
+		}
+
+	}
 }
