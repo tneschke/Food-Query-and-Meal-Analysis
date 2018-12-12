@@ -1,5 +1,6 @@
 package application;
 import java.util.List;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,8 +26,8 @@ public class Main extends Application {
 		BPTree fiberTree = new BPTree(4);
 		BPTree calorieTree = new BPTree(4);
 		TableViewSample tableView = new TableViewSample();
-		FoodTableSample foodTable1 = new FoodTableSample(applicationStage,220,475);
-		FoodTableSample foodTable2 = new FoodTableSample(applicationStage,220, 70);
+		FoodTableSample foodTable1 = new FoodTableSample(applicationStage,220,475, data);
+		FoodTableSample foodTable2 = new FoodTableSample(applicationStage,220, 70, data);
 
 		Button importFoodList = new Button("Import Food List");
 		Button saveFoodList = new Button("Save Food List");
@@ -83,13 +84,17 @@ public class Main extends Application {
 		protein.setLayoutY(380);
 		protein.setText("Enter Protein");
 		
+		TextField carbs = new TextField();
+		carbs.setMaxWidth(80);
+		carbs.setLayoutX(510);
+		carbs.setLayoutY(380);
+		carbs.setText("Enter Carbs");
+		
 		TextField file = new TextField();
 		file.setMaxWidth(200);
 		file.setLayoutX(10);
 		file.setLayoutY(85);
 		file.setText("Enter File Name/Path");
-		
-		
 		
 		Text mealCalories = new Text(10, 550, "Calories");
 		Text calorieCount = new Text(13, 565, "300");
@@ -109,27 +114,32 @@ public class Main extends Application {
             String protNum = ""; 
             String fibNum = "";
             String faNum = "";
-            int cal = 0;   
-            int fib = 0;   
-            int fa = 0;
-            int prot = 0;
+            String carbsNum = "";
+            Double cal = 0.0;   
+            Double fib = 0.0;   
+            Double fa = 0.0;
+            Double prot = 0.0;
+            Double carb = 0.0;
             
             food = foodName.getText();
             calNum = calories.getText();
-            cal = Integer.parseInt(calNum);
+            cal = Double.parseDouble(calNum);
             fibNum = fiber.getText();
-            fib = Integer.parseInt(fibNum);
+            fib = Double.parseDouble(fibNum);
             faNum = fat.getText();
-            fa = Integer.parseInt(faNum);
+            fa = Double.parseDouble(faNum);
             protNum = protein.getText();
-            prot = Integer.parseInt(protNum);
+            prot = Double.parseDouble(protNum);
+            carbsNum = carbs.getText();
+            carb = Double.parseDouble(protNum);
             
             if(prot >= 0 && fa >= 0 && fib >= 0 && cal >= 0) {
                 newFood = new FoodItem(Integer.toString(count), food);
-                newFood.addNutrient("Calories", cal);
-                newFood.addNutrient("Fiber", fib);
-                newFood.addNutrient("Fat", fa);
-                newFood.addNutrient("Protein", prot);
+                newFood.addNutrient("calories", cal);
+                newFood.addNutrient("fiber", fib);
+                newFood.addNutrient("fat", fa);
+                newFood.addNutrient("protein", prot);
+                newFood.addNutrient("carbs", carb);
                 data.addFoodItem(newFood);
                 count++;
             } else {
@@ -178,7 +188,7 @@ public class Main extends Application {
 
 		Group group = new Group(mainTitle, foodItems,importFoodList,saveFoodList,addFoodTitle,
 				foodName, calories, fiber, fat, protein, file, yourMeal, mealCalories,
-				mealFiber, mealFat, mealProtein, calorieCount, fiberCount, fatCount, proteinCount,
+				mealFiber, mealFat, mealProtein, calorieCount, fiberCount, fatCount, proteinCount, carbs,
 				analyzeFood, tableView.start(), foodTable1.start(), foodTable2.start());
 		Scene scene = new Scene(group, 1000, 900);           // Add canvas to panes
 		applicationStage.setTitle("Meal Planner"); // Set window's title
