@@ -235,7 +235,7 @@ public class FoodTableSample {
 		}
 
 		public String getCarbs() {
-			return this.protein;
+			return this.carbs;
 		}
 
 		public void setCarbs(String carbs) {
