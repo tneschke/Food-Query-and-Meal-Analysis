@@ -1,4 +1,7 @@
 package application;
+import java.awt.Desktop.Action;
+import java.beans.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -10,14 +13,21 @@ public class TableViewSample {
     public GridPane start() {
         final Label calorie = new Label("Calories");
         calorie.setFont(new Font("Comic Sans", 16));
+        
         final Label fiber = new Label("Fiber");
         fiber.setFont(new Font("Comic Sans", 12));
+        
         final Label fat = new Label("Fat");
         fat.setFont(new Font("Comic Sans", 12));
+        
         final Label protein = new Label("Protein");
         protein.setFont(new Font("Comic Sans", 12));
+        
         final Label search = new Label("Search By Name");
         search.setFont(new Font("Comic Sans", 12));
+        
+        final Label carbs = new Label("Carbs");
+        carbs.setFont(new Font("Comic Sans", 16));
         
         GridPane gridPane = new GridPane();
         
@@ -59,12 +69,36 @@ public class TableViewSample {
         calorieMaxText.setPrefColumnCount(10);
         calorieMaxText.setEditable(true);
         calorieMaxText.setText("Max Calories");
+        TextField calorieExactText = new TextField();
+        calorieExactText.setPrefColumnCount(10);
+        calorieExactText.setEditable(true);
+        calorieExactText.setText("Exact Calories");
+        
+        TextField carbsMinText = new TextField();
+        carbsMinText.setPrefColumnCount(10);
+        carbsMinText.setEditable(true);
+        
+        carbsMinText.setText("Min Carbs");
+        
+        TextField carbsMaxText = new TextField();
+        carbsMaxText.setPrefColumnCount(10);
+        carbsMaxText.setEditable(true);
+        carbsMaxText.setText("Max Carbs");
+        
+        TextField carbsExactText = new TextField();
+        carbsExactText.setPrefColumnCount(10);
+        carbsExactText.setEditable(true);
+        carbsExactText.setText("Exact Carbs");
        
         TextField fiberMinText = new TextField();
         fiberMinText.setPrefColumnCount(10);
         fiberMinText.setEditable(true);
         fiberMinText.setText("Min Fiber");
         
+        TextField fiberExactText = new TextField();
+        fiberExactText.setPrefColumnCount(10);
+        fiberExactText.setEditable(true);
+        fiberExactText.setText("Exact Fiber");
         TextField fiberMaxText = new TextField();
         fiberMaxText.setPrefColumnCount(10);
         fiberMaxText.setEditable(true);
@@ -93,18 +127,29 @@ public class TableViewSample {
         gridPane.add(calorie, 0, 0);
         gridPane.add(calorieMinText, 0, 1);
         gridPane.add(calorieMaxText, 1, 1);
+        gridPane.add(calorieExactText, 2, 1);
+        
         //gridPane.add(calorieBox, 0, 1);
         gridPane.add(fiber, 0, 2);
         gridPane.add(fiberMinText, 0, 3);
         gridPane.add(fiberMaxText, 1, 3);
+        gridPane.add(fiberExactText, 2, 3);
+        
         //gridPane.add(fiberBox, 0, 3); //edited
         gridPane.add(fat, 0, 4);
         gridPane.add(fatMinText, 0, 5);
         gridPane.add(fatMaxText, 1, 5);
+        
+        gridPane.add(carbs, 0, 6);
+        gridPane.add(carbsMinText, 0, 7);
+        gridPane.add(carbsMaxText, 1, 7);
+        gridPane.add(carbsExactText, 2, 7);
+        
         //gridPane.add(fatMinBox,0 , 5);
-        gridPane.add(protein, 0, 6);
-        gridPane.add(proteinMinText, 0, 7);
-        gridPane.add(proteinMaxText, 1, 7);
+        gridPane.add(protein, 0, 8);
+        gridPane.add(proteinMinText, 0, 9);
+        gridPane.add(proteinMaxText, 1, 9);
+        
         gridPane.add(analyzeButton, 0,10 );
         //gridPane.add(proteinMinBox, 0, 7);
         
@@ -115,27 +160,97 @@ public class TableViewSample {
         String fiberMaxRule;
         String fatMinRule;
         String fatMaxRule;
-        
+        String proteinMaxRule;
+        String proteinMinRule;
         String proteinRule;
+        String proteinExactRule;
+        String fatExactRule;
+        String fiberExactRule;
+        String calExactRule;
+
         
-//        if((caloriesMaxEvent == null && caloriesMinEvent != null) || minCal == maxCal) {
-//            calMinRule = "calories == "+ minCal;
-//            calMaxRule = calMinRule;
+        
+        
+        
+      
+        
+        gridPane.add(foodSearch,0,9);
+       
+        
+//        if(exactCal != null) {
+//            
+//            calExactRule = "calories == "+ exactCal;
+//            
 //        }
-//        if(caloriesMaxEvent != null && caloriesMinEvent != null) {
+//        if(minCal != null && maxCal != null) {
 //            calMinRule = "calories >= " + minCal;
 //            calMaxRule = "calories <= " + maxCal;
 //            
 //        }
+//        if(minCal != null && maxCal == null) {
+//            calMinRule = "calories >= " + minCal;
+//        }
+//        if(maxCal != null && minCal == null) {
+//            calMaxRule = "calories <= " + maxCal;
+//        }
+//        
+//        //Fiber rules
+//        if(exactFiber != null) {
+//            
+//            fiberExactRule = "fiber == "+ exactFiber;
+//            
+//        }
+//        if(minFiber != null && maxFiber != null) {
+//            fiberMinRule = "fiber >= " + minFiber;
+//            fiberMaxRule = "fiber <= " + maxFiber;
+//            
+//        }
+//        if(minFiber != null && maxFiber == null) {
+//            fiberMinRule = "fiber >= " + minFiber;
+//        }
+//        if(maxFiber != null && minFiber == null) {
+//            fiberMaxRule = "fiber <= " + maxFiber;
+//        }
+//        //fat rules
+//        if(exactFat != null) {
+//            
+//            fatExactRule = "fiber == "+ exactFat;
+//            
+//        }
+//        if(minFat != null && maxFat != null) {
+//            fatMinRule = "fat >= " + minFat;
+//            fatMaxRule = "fat <= " + maxFat;
+//            
+//        }
+//        if(minfat != null && maxFiber == null) {
+//            fatMinRule = "fat >= " + minFat;
+//            }
+//        if(maxFat != null && minFat == null) {
+//            fatMaxRule = "fat <= " + maxFat;
+//        }
+//        // protein rules
+//        if(exactProtein != null) {
+//            
+//            proteinExactRule = "protein == "+ exactProtein;
+//            
+//        }
+//        if(minProtein != null && maxProtein != null) {
+//            proteinMinRule = "protein >= " + minProtein;
+//            proteinMaxRule = "protein <= " + maxProtein;
+//            
+//        }
+//        if(minProtein != null && maxProtein == null) {
+//            proteinMinRule = "protein >= " + minProtein;
+//            }
+//        if(maxProtein != null && minProtein == null) {
+//            proteinMaxRule = "protein <= " + maxProtein;
+//        }
+
         
-        
-        //gridPane.add(fatText, 1, 5);
-        
-        gridPane.add(foodSearch,0,9);
         
         gridPane.setLayoutX(10);
         gridPane.setLayoutY(120);
-        //calories fiber fat protein
+        //calories fiber fat carbs protein
         return gridPane;
     }
 }
