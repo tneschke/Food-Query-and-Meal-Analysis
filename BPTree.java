@@ -219,7 +219,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
          * @see BPTree.Node#insert(java.lang.Comparable, java.lang.Object)
          */
         void insert(K key, V value) {           
-                Node child = getChild(key);
+                Node child = getChild(key); //Not getChild
                 child.insert(key, value);
                 if(child.isOverflow()) {
                     Node brother = child.split();
@@ -235,7 +235,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
          * @see BPTree.Node#split()
          */
         Node split() {
-            int from = keys.size() / 2 + 1;
+            int from = (keys.size() + 1) / 2 ;
             int to = keys.size();
             InternalNode brother = new InternalNode(); // new node to hold split keys and children
             brother.keys.addAll(keys.subList(from, to));
@@ -268,6 +268,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
         private void insertChild(K key, Node child) {
             int result = Collections.binarySearch(keys, key);
             if(result >= 0) {
+            	keys.add(result + 1, key);
                 children.add(result + 1, child);
             } else {
                 keys.add(-result - 1, key);
@@ -275,7 +276,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
             }
         }
         //Returns the node located at Key.
-        private Node getChild(K key) {      //Needs fixing
+        private Node getChild(K key) {  
             int result = Collections.binarySearch(keys, key);
             if(result >= 0) { //If the key is found return the child 
                 return children.get(result + 1);
@@ -349,7 +350,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
                         values.add(-result - 1,value);
                     }
                 }
-                if(this.isOverflow()) {
+                if(this.isOverflow() && (root instanceof BPTree.LeafNode)) {
                     Node brother = split();
                     InternalNode newRoot = new InternalNode();
                         newRoot.keys.add(brother.getFirstLeafKey());
@@ -431,7 +432,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
         // just that it functions as a data structure with
         // insert, rangeSearch, and toString() working.
         List<Double> list = new ArrayList<>();
-        for (int i = 0; i < 400; i++) {
+        for (int i = 0; i < 40; i++) {
             Double j = dd[rnd1.nextInt(4)];
             list.add(j);
             bpTree.insert(j, j);
