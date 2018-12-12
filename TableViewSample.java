@@ -115,9 +115,9 @@ public class TableViewSample {
 		fatMaxText.setText("Max Fat");
 		
 		TextField fatExactText = new TextField();
-		fatMaxText.setPrefColumnCount(10);
-		fatMaxText.setEditable(true);
-		fatMaxText.setText("Exact Fat");
+		fatExactText.setPrefColumnCount(10);
+		fatExactText.setEditable(true);
+		fatExactText.setText("Exact Fat");
 
 		TextField proteinMinText = new TextField();
 		proteinMinText.setPrefColumnCount(10);
@@ -130,9 +130,9 @@ public class TableViewSample {
 		proteinMaxText.setText("Max Protein");
 
 		TextField proteinExactText = new TextField();
-		proteinMaxText.setPrefColumnCount(10);
-		proteinMaxText.setEditable(true);
-		proteinMaxText.setText("Exact Protein");
+		proteinExactText.setPrefColumnCount(10);
+		proteinExactText.setEditable(true);
+		proteinExactText.setText("Exact Protein");
 
 		gridPane.add(calorie, 0, 0);
 		gridPane.add(calorieMinText, 0, 1);
@@ -149,7 +149,7 @@ public class TableViewSample {
 		gridPane.add(fat, 0, 4);
 		gridPane.add(fatMinText, 0, 5);
 		gridPane.add(fatMaxText, 1, 5);
-		gridPane.add(fatExactText, 2, 7);
+		gridPane.add(fatExactText, 2, 5);
 
 		gridPane.add(carbs, 0, 6);
 		gridPane.add(carbsMinText, 0, 7);
@@ -160,8 +160,9 @@ public class TableViewSample {
 		gridPane.add(protein, 0, 8);
 		gridPane.add(proteinMinText, 0, 9);
 		gridPane.add(proteinMaxText, 1, 9);
-
-		gridPane.add(analyzeButton, 0,10 );
+		gridPane.add(proteinExactText, 2, 9);
+		gridPane.add(foodSearch,0,10);
+		gridPane.add(analyzeButton,1 ,10);
 		//gridPane.add(proteinMinBox, 0, 7);
 
 
@@ -183,6 +184,18 @@ public class TableViewSample {
 				String carbMaxRule, carbMinRule, carbExactRule;
 
 				try {
+				    calorieMinText.clear();
+	                   calorieMaxText.clear();
+	                   calorieExactText.clear();
+	                   fiberMinText.clear();
+                       fiberMaxText.clear();
+                       fiberExactText.clear();
+                       fatMinText.clear();
+                       fatMaxText.clear();
+                       fatExactText.clear();
+                       carbsMinText.clear();
+                       carbsMaxText.clear();
+                       carbsExactText.clear();
 					minCalories = calorieMinText.getText();
 					maxCalories = calorieMaxText.getText();
 					exactCalories = calorieExactText.getText();
@@ -262,7 +275,7 @@ public class TableViewSample {
 			} 
 		});
 
-		gridPane.add(foodSearch,0,9);
+		
 		gridPane.setLayoutX(10);
 		gridPane.setLayoutY(120);
 		//calories fiber fat carbs protein
