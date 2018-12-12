@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 
 public class Main extends Application {
 	private int count = 0;
+	private FoodTableSample foodTable1;
 	@Override
 	public void start(Stage applicationStage) {
 		FoodData data = new FoodData();
@@ -26,14 +27,14 @@ public class Main extends Application {
 		BPTree fiberTree = new BPTree(4);
 		BPTree calorieTree = new BPTree(4);
 		TableViewSample tableView = new TableViewSample();
-		FoodTableSample foodTable1 = new FoodTableSample(applicationStage,220,475, data);
+		foodTable1 = new FoodTableSample(applicationStage,220,475, data);
 		FoodTableSample foodTable2 = new FoodTableSample(applicationStage,220, 70, data);
 
 		Button importFoodList = new Button("Import Food List");
 		Button saveFoodList = new Button("Save Food List");
 		Button addFoodTitle = new Button("Add New Food"); //button done
 		Button analyzeFood = new Button("Analyze Food");
-		
+
 		analyzeFood.setLayoutX(10);
 		analyzeFood.setLayoutY(500);
 		importFoodList.setLayoutX(10);
@@ -53,50 +54,49 @@ public class Main extends Application {
 		foodItems.setFill(Color.DARKSLATEGREY);
 		yourMeal.setFont(Font.font("ComicSans", FontWeight.BOLD, 18));
 		yourMeal.setFill(Color.DARKSLATEGREY);
-		
+
 		TextField foodName = new TextField();
 		foodName.setMaxWidth(80);
 		foodName.setLayoutX(10);
 		foodName.setLayoutY(380);
-		foodName.setText("Enter Food Name");
-		
+		foodName.setText("Food Name");
+
 		TextField calories = new TextField();
 		calories.setMaxWidth(80);
 		calories.setLayoutX(110);
 		calories.setLayoutY(380);
 		calories.setText("Enter Calories");
-		
-		TextField fat = new TextField();
-		fat.setMaxWidth(80);
-		fat.setLayoutX(210);
-		fat.setLayoutY(380);
-		fat.setText("Enter Fat");
-		
-		TextField carbs = new TextField();
-		carbs.setMaxWidth(80);
-		carbs.setLayoutX(310);
-		carbs.setLayoutY(380);
-		carbs.setText("Enter Carbs");
-		
+
 		TextField fiber = new TextField();
 		fiber.setMaxWidth(80);
-		fiber.setLayoutX(410);
+		fiber.setLayoutX(210);
 		fiber.setLayoutY(380);
 		fiber.setText("Enter Fiber");
-		
+
+		TextField fat = new TextField();
+		fat.setMaxWidth(80);
+		fat.setLayoutX(310);
+		fat.setLayoutY(380);
+		fat.setText("Enter Fat");
+
 		TextField protein = new TextField();
 		protein.setMaxWidth(80);
-		protein.setLayoutX(510);
+		protein.setLayoutX(410);
 		protein.setLayoutY(380);
 		protein.setText("Enter Protein");
-		
-		
+
+		TextField carbs = new TextField();
+		carbs.setMaxWidth(80);
+		carbs.setLayoutX(510);
+		carbs.setLayoutY(380);
+		carbs.setText("Enter Carbs");
+
 		TextField file = new TextField();
 		file.setMaxWidth(200);
 		file.setLayoutX(10);
 		file.setLayoutY(85);
 		file.setText("Enter File Name/Path");
-		
+
 		Text mealCalories = new Text(10, 550, "Calories");
 		Text calorieCount = new Text(13, 565, "300");
 		Text mealFiber = new Text(10, 600, "Fiber");
@@ -105,87 +105,94 @@ public class Main extends Application {
 		Text fatCount = new Text(13, 665, "18 g");
 		Text mealProtein = new Text(10, 700, "Protein");
 		Text proteinCount = new Text(13, 715, "1 g");
-		
+
 		addFoodTitle.setOnAction(new EventHandler<ActionEvent>() {
-         @Override
-         public void handle(ActionEvent event) {
-        	FoodItem newFood;// = new FoodItem(count, null);
-        	String food = "";
-            String calNum = ""; 
-            String protNum = ""; 
-            String fibNum = "";
-            String faNum = "";
-            String carbsNum = "";
-            Double cal = 0.0;   
-            Double fib = 0.0;   
-            Double fa = 0.0;
-            Double prot = 0.0;
-            Double carb = 0.0;
-            
-            food = foodName.getText();
-            calNum = calories.getText();
-            cal = Double.parseDouble(calNum);
-            fibNum = fiber.getText();
-            fib = Double.parseDouble(fibNum);
-            faNum = fat.getText();
-            fa = Double.parseDouble(faNum);
-            protNum = protein.getText();
-            prot = Double.parseDouble(protNum);
-            carbsNum = carbs.getText();
-            carb = Double.parseDouble(protNum);
-            
-            if(prot >= 0 && fa >= 0 && fib >= 0 && cal >= 0) {
-                newFood = new FoodItem(Integer.toString(count), food);
-                newFood.addNutrient("calories", cal);
-                newFood.addNutrient("fiber", fib);
-                newFood.addNutrient("fat", fa);
-                newFood.addNutrient("protein", prot);
-                newFood.addNutrient("carbs", carb);
-                data.addFoodItem(newFood);
-                count++;
-            } else {
-            	Alert alert = new Alert(AlertType.ERROR, "Enter a positive number.");
-            	alert.showAndWait();
-            }
-            return;
-         } 
-      });
-		
+			@Override
+			public void handle(ActionEvent event) {
+				FoodItem newFood;// = new FoodItem(count, null);
+				String food = "";
+				String calNum = ""; 
+				String protNum = ""; 
+				String fibNum = "";
+				String faNum = "";
+				String carbsNum = "";
+				Double cal = 0.0;   
+				Double fib = 0.0;   
+				Double fa = 0.0;
+				Double prot = 0.0;
+				Double carb = 0.0;
+
+				try {
+					food = foodName.getText();
+					calNum = calories.getText();
+					cal = Double.parseDouble(calNum);
+					fibNum = fiber.getText();
+					fib = Double.parseDouble(fibNum);
+					faNum = fat.getText();
+					fa = Double.parseDouble(faNum);
+					protNum = protein.getText();
+					prot = Double.parseDouble(protNum);
+					carbsNum = carbs.getText();
+					carb = Double.parseDouble(protNum);
+				} catch(Exception e){
+					Alert alert = new Alert(AlertType.ERROR, "Enter all information for a new food.");
+					alert.showAndWait();
+				}
+
+				if(prot >= 0 && fa >= 0 && fib >= 0 && cal >= 0) {
+					newFood = new FoodItem(Integer.toString(count), food);
+					newFood.addNutrient("calories", cal);
+					newFood.addNutrient("fiber", fib);
+					newFood.addNutrient("fat", fa);
+					newFood.addNutrient("protein", prot);
+					newFood.addNutrient("carbs", carb);
+					data.addFoodItem(newFood);
+					FoodTableSample tableUpdate = new FoodTableSample(applicationStage, 220, 475, data);
+					count++;
+				} else {
+					Alert alert = new Alert(AlertType.ERROR, "Enter a positive number.");
+					alert.showAndWait();
+				}
+				return;
+			} 
+		});
+
 		importFoodList.setOnAction(new EventHandler<ActionEvent>() {
-	         @Override
-	         public void handle(ActionEvent event) {
-	        	data.loadFoodItems(file.getText());
-	         } 
-	      });
-		
+			@Override
+			public void handle(ActionEvent event) {
+				data.loadFoodItems(file.getText());
+				//foodTable1 = new FoodTableSample(applicationStage,220,475, data);
+			} 
+		});
+
 		saveFoodList.setOnAction(new EventHandler<ActionEvent>() {
-	         @Override
-	         public void handle(ActionEvent event) {    	
-	        	data.saveFoodItems(file.getText());
-	         } 
-	      });
-		
+			@Override
+			public void handle(ActionEvent event) {    	
+				data.saveFoodItems(file.getText());
+			} 
+		});
+
 		analyzeFood.setOnAction(new EventHandler<ActionEvent>() {
-	         @Override
-	         public void handle(ActionEvent event) {
-	        	//maybe change to new food list they add food to -teague
-	        	List<FoodItem> foods = data.getAllFoodItems();
-	        	int cal = 0;   
-	            int fib = 0;   
-	            int fat = 0;
-	            int prot = 0;
-	        	for(FoodItem food : foods) {
-	        		cal += food.getNutrientValue("calories");
-	        		fib += food.getNutrientValue("fiber");
-	        		fat += food.getNutrientValue("fat");
-	        		prot += food.getNutrientValue("prot");
-	        	}
-	        	calorieCount.setText(Integer.toString(cal));
-	        	fiberCount.setText(Integer.toString(fib));
-	        	proteinCount.setText(Integer.toString(prot));
-	        	fatCount.setText(Integer.toString(fat));
-	         } 
-	      });
+			@Override
+			public void handle(ActionEvent event) {
+				//maybe change to new food list they add food to -teague
+				List<FoodItem> foods = data.getAllFoodItems();
+				int cal = 0;   
+				int fib = 0;   
+				int fat = 0;
+				int prot = 0;
+				for(FoodItem food : foods) {
+					cal += food.getNutrientValue("calories");
+					fib += food.getNutrientValue("fiber");
+					fat += food.getNutrientValue("fat");
+					prot += food.getNutrientValue("prot");
+				}
+				calorieCount.setText(Integer.toString(cal));
+				fiberCount.setText(Integer.toString(fib));
+				proteinCount.setText(Integer.toString(prot));
+				fatCount.setText(Integer.toString(fat));
+			} 
+		});
 
 		Group group = new Group(mainTitle, foodItems,importFoodList,saveFoodList,addFoodTitle,
 				foodName, calories, fiber, fat, protein, file, yourMeal, mealCalories,
