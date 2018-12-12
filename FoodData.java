@@ -29,7 +29,17 @@ public class FoodData implements FoodDataADT<FoodItem> {
      * Public constructor
      */
     public FoodData() {
-        // TODO : Complete
+    	BPTree<Double, FoodItem> calories = new BPTree<Double, FoodItem>(3);
+        BPTree<Double, FoodItem> fat = new BPTree<Double, FoodItem>(3);
+        BPTree<Double, FoodItem> fiber = new BPTree<Double, FoodItem>(3);
+        BPTree<Double, FoodItem> protein = new BPTree<Double, FoodItem>(3);
+        BPTree<Double, FoodItem> carbs = new BPTree<Double, FoodItem>(3);
+
+        indexes.put("calories", calories);
+        indexes.put("fat", fat);
+        indexes.put("fiber", fiber);
+        indexes.put("protein", protein);
+        indexes.put("carbs", carbs);
     }
     
     
@@ -43,17 +53,15 @@ public class FoodData implements FoodDataADT<FoodItem> {
         String line = "";
         try {
             br = new BufferedReader(new FileReader(filePath));
-            while ((line = br.readLine()) != null || line != ",,,,,,,,,,,") {
-
+            while ((line = br.readLine()) != null && line.length() > 14) {	
                 String[] data = line.split(",");
                 FoodItem newFood = new FoodItem(data[0],data[1]);
                 for(int i = 2; i < 12; i+=2 ) {
                 	newFood.addNutrient(data[i], Double.parseDouble(data[i+1]));
+                	indexes.get(data[i]).insert(Double.parseDouble(data[i+1]), newFood);
                 }
-                foodItemList.add(newFood);
-
+                foodItemList.add(newFood);          
             }
-
         } 
         catch (FileNotFoundException e) {
             System.err.print("File does not exist!");
@@ -95,16 +103,18 @@ public class FoodData implements FoodDataADT<FoodItem> {
     	for(FoodItem food : foodItemList) {
     		newList.add(food); 
     	}
-    	
-    	newList = foodItemList;
+    	List<FoodItem> tempList = new LinkedList<FoodItem>();
         for (String rule : rules) {
         	String[] ruleArray = rule.split("\\s+");
-        	for(FoodItem food : foodItemList) {
-            	if(food.getNutrientValue(ruleArray[0]) < (Double.parseDouble(ruleArray[1]))
-            			&& food.getNutrientValue(ruleArray[0]) > (Double.parseDouble(ruleArray[2]))) {
-            		newList.remove(food);
-            	}
-            }
+        	tempList = indexes.get(ruleArray[0]).rangeSearch(Double.parseDouble(ruleArray[2]), ruleArray[1]);
+//        	for(FoodItem food : foodItemList) {
+//        		newList = indexes.get(key)
+//            	if(food.getNutrientValue(ruleArray[0]) < (Double.parseDouble(ruleArray[1]))
+//            			&& food.getNutrientValue(ruleArray[0]) > (Double.parseDouble(ruleArray[2]))) {
+//            		newList.remove(food);
+//            	}
+//            }
+        	newList.retainAll(tempList);
         }
         return newList;
     }
@@ -116,6 +126,10 @@ public class FoodData implements FoodDataADT<FoodItem> {
     @Override
     public void addFoodItem(FoodItem foodItem) {
         foodItemList.add(foodItem);
+        indexes.get("calories").insert(foodItem.getNutrientValue("calories"), foodItem);
+        indexes.get("fat").insert(foodItem.getNutrientValue("fat"), foodItem);
+        indexes.get("protein").insert(foodItem.getNutrientValue("protein"), foodItem);
+        indexes.get("carbs").insert(foodItem.getNutrientValue("carbs"), foodItem);
     }
 
     /*
