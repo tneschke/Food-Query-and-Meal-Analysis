@@ -1,4 +1,4 @@
-package application;
+
 import java.util.List;
 
 import javafx.application.Application;
@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 
 public class Main extends Application {
 	private int count = 0;
-	private FoodTableSample foodTable1;
+	private FoodTableSample foodTable2;
 	@Override
 	public void start(Stage applicationStage) {
 		FoodData data = new FoodData();
@@ -27,8 +27,10 @@ public class Main extends Application {
 		BPTree fiberTree = new BPTree(4);
 		BPTree calorieTree = new BPTree(4);
 		TableViewSample tableView = new TableViewSample();
-		foodTable1 = new FoodTableSample(applicationStage,220,475, data);
-		FoodTableSample foodTable2 = new FoodTableSample(applicationStage,220, 70, data);
+		
+		
+		foodTable2 = new FoodTableSample(applicationStage,220,475, data);
+		FoodTableSample foodTable1 = new FoodTableSample(applicationStage,220, 70, data);
 
 		Button importFoodList = new Button("Import Food List");
 		Button saveFoodList = new Button("Save Food List");
@@ -161,7 +163,7 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				data.loadFoodItems(file.getText());
-				//foodTable1 = new FoodTableSample(applicationStage,220,475, data);
+				foodTable1.update(data);
 			} 
 		});
 
