@@ -1,3 +1,19 @@
+/**
+ * Filename:   TableViewSample.java
+ * Project:    Meal Analysis M3
+ * Authors:    Kiara Mutschler, Teague Neschke, Wes Koerner, Nathan Frank, Sneha Polishetty 
+ *
+ * Semester:   Fall 2018
+ * Course:     CS400
+ * Lecture:    002 (Sneha, Wes) & 001 (Kiara, Teague, Nathan) 
+ * 
+ * Due Date:   Before 10pm on December 12, 2018
+ * Version:    1.0
+ * 
+ * Credits:    none
+ * 
+ * Bugs:       no known bugs, but not complete either
+ */
 package application;
 
 import java.util.ArrayList;
@@ -12,9 +28,16 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
-
+/**
+ * This class displays the food filtering options. This class allows the user to
+ * apply nutrient filters to view foods with certain nutrients values based on
+ * rules.
+ * 
+ * @author Kiara Mutschler, Teague Neschke, Wes Koerner, Nathan Frank, Sneha
+ *         Polishetty
+ */
 public class TableViewSample {
-    private FoodData data = new FoodData();
+	private FoodData data = new FoodData();
 
     public GridPane start() {
         Font comicSans = new Font("Comic Sans", 12);
@@ -40,27 +63,7 @@ public class TableViewSample {
 
         Button analyzeButton = new Button("Filter List");
         
-
-        // ComboBox<String> calorieBox = new ComboBox<String>();
-        // calorieBox.getItems().add("<");
-        // calorieBox.getItems().add(">");
-        // calorieBox.getItems().add("=");
-        //
-        // ComboBox<String> fiberBox = new ComboBox<String>();
-        // fiberBox.getItems().add("<");
-        // fiberBox.getItems().add(">");
-        // fiberBox.getItems().add("=");
-        //
-        // ComboBox<String> fatMinBox = new ComboBox<String>();
-        // fatMinBox.getItems().add("<");
-        // fatMinBox.getItems().add(">");
-        // fatMinBox.getItems().add("=");
-        //
-        // ComboBox<String> proteinMinBox = new ComboBox<String>();
-        // proteinMinBox.getItems().add("<");
-        // proteinMinBox.getItems().add(">");
-        // proteinMinBox.getItems().add("=");
-
+        //the following code below are the text fields for all possible filters that can be applied
         TextField calorieMinText = new TextField();
         calorieMinText.setPrefColumnCount(10);
         calorieMinText.setEditable(true);
@@ -141,13 +144,11 @@ public class TableViewSample {
         gridPane.add(calorieMaxText, 1, 1);
         gridPane.add(calorieExactText, 2, 1);
 
-        // gridPane.add(calorieBox, 0, 1);
         gridPane.add(fiber, 0, 2);
         gridPane.add(fiberMinText, 0, 3);
         gridPane.add(fiberMaxText, 1, 3);
         gridPane.add(fiberExactText, 2, 3);
 
-        // gridPane.add(fiberBox, 0, 3); //edited
         gridPane.add(fat, 0, 4);
         gridPane.add(fatMinText, 0, 5);
         gridPane.add(fatMaxText, 1, 5);
@@ -158,27 +159,25 @@ public class TableViewSample {
         gridPane.add(carbsMaxText, 1, 7);
         gridPane.add(carbsExactText, 2, 7);
 
-        // gridPane.add(fatMinBox,0 , 5);
         gridPane.add(protein, 0, 8);
         gridPane.add(proteinMinText, 0, 9);
         gridPane.add(proteinMaxText, 1, 9);
         gridPane.add(proteinExactText, 2, 9);
         gridPane.add(foodSearch, 0, 10);
         gridPane.add(analyzeButton, 1, 10);
-        // gridPane.add(proteinMinBox, 0, 7);
-
 
         analyzeButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 List<String> rules = new ArrayList<String>();
                 List<FoodItem> foods = new ArrayList<FoodItem>();
+                //the following are user inputs which will be converted to double values
                 double minCalories, maxCalories, exactCalories;
                 double minFiber, maxFiber, exactFiber;
                 double minFat, maxFat, exactFat;
                 double minProtein, maxProtein, exactProtein;
                 double minCarbs, maxCarbs, exactCarbs;
-                // rules
+                // the following are filter rules names
                 String calMinRule, calMaxRule, calExactRule;
                 String fiberMinRule, fiberMaxRule, fiberExactRule;
                 String fatMinRule, fatMaxRule, fatExactRule;
@@ -207,16 +206,6 @@ public class TableViewSample {
                     String maxProteinVal = clearMaxProtein(proteinMaxText.getText());
                     String exactProteinVal = clearExactProtein(proteinExactText.getText());
 
-
-
-
-
-
-
-
-
-
-
                     if (minCalVal != null) {
                         minCalories = Double.parseDouble(minCalVal);
                         calMinRule = "calories >= " + minCalories;
@@ -232,7 +221,6 @@ public class TableViewSample {
                         calExactRule = "calories == " + exactCalories;
                         rules.add(calExactRule);
                     }
-                    //fiber
                     if (minFiberVal != null) {
                         minFiber = Double.parseDouble(minFiberVal);
                        fiberMinRule = "fiber >= " + minFiber;
@@ -304,13 +292,12 @@ public class TableViewSample {
             }
         });
 
-
         gridPane.setLayoutX(10);
         gridPane.setLayoutY(120);
-        // calories fiber fat carbs protein
         return gridPane;
     }
    
+    		//the following methods clear the respective text field once the analyze food button is clicked
         private String clearMinCal(String calorieMinText) {
         if(calorieMinText.equals("Min Calories")) {
             calorieMinText = null;
@@ -409,8 +396,6 @@ public class TableViewSample {
                 proteinExactText = null;
             }
             return proteinExactText;
-            }
-        
-        
+            }  
 
 }
