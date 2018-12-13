@@ -33,7 +33,7 @@ public class Main extends Application {
 		TableViewSample tableView = new TableViewSample();
 		
 		
-		foodTable2 = new FoodTableSample(applicationStage,370,510, foodList);
+		foodTable2 = new FoodTableSample(applicationStage,370,550, foodList);
 		FoodTableSample foodTable1 = new FoodTableSample(applicationStage,370, 70, foodList);
 		Button delfromMyList = new Button("Delete Food from Meal");
 		Button importFoodList = new Button("Import Food List");
@@ -43,21 +43,21 @@ public class Main extends Application {
 		Button addToMyList = new Button("Add Food to Meal");
 
 		analyzeFood.setLayoutX(10);
-		analyzeFood.setLayoutY(530);
+		analyzeFood.setLayoutY(520);
 		importFoodList.setLayoutX(10);
 		importFoodList.setLayoutY(50);
-		addFoodTitle.setLayoutX(10);
-		addFoodTitle.setLayoutY(470);
+		addFoodTitle.setLayoutX(610);
+		addFoodTitle.setLayoutY(420);
 		saveFoodList.setLayoutX(140);
 		saveFoodList.setLayoutY(50);
-		addToMyList.setLayoutX(780);
-		addToMyList.setLayoutY(430);
-		delfromMyList.setLayoutX(930);
-        delfromMyList.setLayoutY(430);
+		addToMyList.setLayoutX(150);
+		addToMyList.setLayoutY(620);
+		delfromMyList.setLayoutX(300);
+        delfromMyList.setLayoutY(620);
         
 		Text mainTitle = new Text(10, 25, "Meal Planner");
 		Text foodItems = new Text(550, 50, "Food Items");
-		Text yourMeal = new Text(550, 490, "Your Meal");
+		Text yourMeal = new Text(550, 530, "Your Meal");
 
 		mainTitle.setFont(Font.font("ComicSans", FontWeight.BOLD, 25));
 		mainTitle.setFill(Color.DARKSLATEGREY);
@@ -110,14 +110,14 @@ public class Main extends Application {
 		
 		TextField addFood = new TextField();
 		addFood.setPrefWidth(100);
-		addFood.setLayoutX(800);
-		addFood.setLayoutY(390);
+		addFood.setLayoutX(170);
+		addFood.setLayoutY(580);
 		addFood.setText("Food Name");
 		
 		TextField removeFood = new TextField();
         removeFood.setPrefWidth(100);
-        removeFood.setLayoutX(960);
-        removeFood.setLayoutY(390);
+        removeFood.setLayoutX(330);
+        removeFood.setLayoutY(580);
         removeFood.setText("Food Name");
 
 		Text mealCalories = new Text(10, 580, "Total Calories");
@@ -227,11 +227,11 @@ public class Main extends Application {
 			public void handle(ActionEvent event) {
 				//maybe change to new food list they add food to -teague
 				List<FoodItem> eles = myFood.getAllFoodItems();
-				int cal = 0;   
-				int fib = 0;   
-				int fat = 0;
-				int prot = 0;
-				int carb = 0;
+				double cal = 0;   
+				double fib = 0;   
+				double fat = 0;
+				double prot = 0;
+				double carb = 0;
 				for(FoodItem food : eles) {
 					cal += food.getNutrientValue("calories");
 					fib += food.getNutrientValue("fiber");
@@ -239,11 +239,11 @@ public class Main extends Application {
 					prot += food.getNutrientValue("protein");
 					carb += food.getNutrientValue("carbohydrate");
 				}
-				calorieCount.setText(Integer.toString(cal));
-				fatCount.setText(Integer.toString(fat) + " g");
-				fiberCount.setText(Integer.toString(fib) + " g");
-				proteinCount.setText(Integer.toString(prot) +" g");
-				carbCount.setText(Integer.toString(carb)+ " g");
+				calorieCount.setText(Double.toString(cal));
+				fatCount.setText(Double.toString(fat) + " g");
+				fiberCount.setText(Double.toString(fib) + " g");
+				proteinCount.setText(Double.toString(prot) +" g");
+				carbCount.setText(Double.toString(carb)+ " g");
 			} 
 		});
 
