@@ -380,7 +380,7 @@ public class TableViewSample {
             }
         
         private String clearExactCal(String calMinText) {
-            if(calMinText.equals("Min Calories")) {
+            if(calMinText.equals("Exact Calories")) {
                 calMinText = null;
             }
             return calMinText;
@@ -398,7 +398,7 @@ public class TableViewSample {
             return fatExactText;
             }
         private String clearExactFiber(String fiberExactText) {
-            if(fiberExactText.equals("Exact Carbs")) {
+            if(fiberExactText.equals("Exact Fiber")) {
                 fiberExactText = null;
             }
             return fiberExactText;
