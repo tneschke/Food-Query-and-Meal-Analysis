@@ -15,7 +15,6 @@
  * Bugs:       no known bugs, but not complete either
  */
 package application;
-import java.util.LinkedList;
 import java.util.List;
 
 import javafx.beans.property.DoubleProperty;
@@ -24,7 +23,6 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -35,7 +33,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -67,15 +64,8 @@ public class FoodTableSample {
 		 this.x = x;
 	        this.y = y; 
 	        table = new TableView<>();
-//	        data = 
-//	        		FXCollections.observableArrayList(new TableItem("Turnip", "20", "3", "2", "5"), new TableItem("Carrot", "20", "7", "8", "9")
-//	        		,new TableItem("Turnip", "20", "3", "2", "5"), new TableItem("Turnip", "20", "3", "2", "5"), new TableItem("Turnip", "20", "3", "2", "5"),
-//	        		new TableItem("Turnip", "20", "3", "2", "5"), new TableItem("Turnip", "20", "3", "2", "5"), new TableItem("Turnip", "20", "3", "2", "5"),
-//	        		new TableItem("Turnip", "20", "3", "2", "5"));
 	        data = FXCollections.observableArrayList();
 	        List<FoodItem> foodList = foods.getAllFoodItems();
-	    	data.add(new TableItem("Turnip", "20", "20", "20", "20" ,"20"));
-	    	System.out.print(foodList.size());
 	        for(FoodItem food : foodList) {
 	        	TableItem tableItem = new TableItem(food.getName(), String.valueOf(food.getNutrientValue("calories")),
 	        			String.valueOf(food.getNutrientValue("fat")),String.valueOf(food.getNutrientValue("fiber")),
