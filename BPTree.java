@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
-
 /**
  * Implementation of a B+ tree to allow efficient access to
  * many different indexes of a large data set. 
@@ -67,8 +66,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
         this.branchingFactor = branchingFactor;
         root = new LeafNode();
     }
-    
-    
+       
     /*
      * (non-Javadoc)
      * @see BPTreeADT#insert(java.lang.Object, java.lang.Object)
@@ -77,8 +75,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
     public void insert(K key, V value) {
         root.insert(key, value);
     }
-    
-    
+       
     /*
      * (non-Javadoc)
      * @see BPTreeADT#rangeSearch(java.lang.Object, java.lang.String)
@@ -93,7 +90,6 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
         else
             return root.rangeSearch(key, comparator);
     }
-    
     
     /*
      * (non-Javadoc)
@@ -129,8 +125,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
         }
         return sb.toString();
     }
-    
-    
+      
     /**
      * This abstract class represents any type of node in the tree
      * This class is a super class of the LeafNode and InternalNode types.
@@ -338,8 +333,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
         }
     
     } // End of class InternalNode
-    
-    
+       
     /**
      * This class represents a leaf node of the tree.
      * This class is a concrete sub class of the abstract Node class
@@ -469,8 +463,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
         }
         
     } // End of class LeafNode
-    
-    
+        
     /**
      * Contains a basic test scenario for a BPTree instance.
      * It shows a simple example of the use of this class
