@@ -206,7 +206,7 @@ public class Main extends Application {
 				foodName, calories, fiber, fat, protein, file, yourMeal, mealCalories,
 				mealFiber, mealFat, mealProtein, calorieCount, fiberCount, fatCount, proteinCount, carbs,
 				analyzeFood, tableView.start(), foodTable1.start(), foodTable2.start());
-		Scene scene = new Scene(group, 1000, 900);           // Add canvas to panes
+		Scene scene = new Scene(group, 1200, 900);           // Add canvas to panes
 		applicationStage.setTitle("Meal Planner"); // Set window's title
 		applicationStage.setScene(scene);          // Set window's scene
 		applicationStage.show();                   // Display window
