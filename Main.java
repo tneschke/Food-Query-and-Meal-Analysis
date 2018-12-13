@@ -21,16 +21,19 @@ public class Main extends Application {
 	private FoodTableSample foodTable2;
 	@Override
 	public void start(Stage applicationStage) {
-		FoodData data = new FoodData();
+		FoodData foodList = new FoodData();
+		FoodData myFood = new FoodData();
+
 		BPTree proteinTree = new BPTree(4);
 		BPTree fatTree = new BPTree(4);
 		BPTree fiberTree = new BPTree(4);
 		BPTree calorieTree = new BPTree(4);
+		
 		TableViewSample tableView = new TableViewSample();
 		
 		
-		foodTable2 = new FoodTableSample(applicationStage,220,475, data);
-		FoodTableSample foodTable1 = new FoodTableSample(applicationStage,220, 70, data);
+		foodTable2 = new FoodTableSample(applicationStage,220,475, foodList);
+		FoodTableSample foodTable1 = new FoodTableSample(applicationStage,220, 70, foodList);
 
 		Button importFoodList = new Button("Import Food List");
 		Button saveFoodList = new Button("Save Food List");
@@ -148,8 +151,8 @@ public class Main extends Application {
 					newFood.addNutrient("fat", fa);
 					newFood.addNutrient("protein", prot);
 					newFood.addNutrient("carbs", carb);
-					data.addFoodItem(newFood);
-					FoodTableSample tableUpdate = new FoodTableSample(applicationStage, 220, 475, data);
+					foodList.addFoodItem(newFood);
+					FoodTableSample tableUpdate = new FoodTableSample(applicationStage, 220, 475, foodList);
 					count++;
 				} else {
 					Alert alert = new Alert(AlertType.ERROR, "Enter a positive number.");
@@ -162,15 +165,15 @@ public class Main extends Application {
 		importFoodList.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				data.loadFoodItems(file.getText());
-				foodTable1.update(data);
+				foodList.loadFoodItems(file.getText());
+				foodTable1.update(foodList);
 			} 
 		});
 
 		saveFoodList.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {    	
-				data.saveFoodItems(file.getText());
+				foodList.saveFoodItems(file.getText());
 			} 
 		});
 
@@ -178,7 +181,7 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				//maybe change to new food list they add food to -teague
-				List<FoodItem> foods = data.getAllFoodItems();
+				List<FoodItem> foods = foodList.getAllFoodItems();
 				int cal = 0;   
 				int fib = 0;   
 				int fat = 0;
