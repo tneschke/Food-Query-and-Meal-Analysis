@@ -63,11 +63,11 @@ public class Main extends Application {
 		yourMeal.setFont(Font.font("ComicSans", FontWeight.BOLD, 18));
 		yourMeal.setFill(Color.DARKSLATEGREY);
 
-		TextField foodName = new TextField();
+	TextField foodName = new TextField();
 		foodName.setMaxWidth(80);
 		foodName.setLayoutX(10);
 		foodName.setLayoutY(380);
-		foodName.setText("Food Name");
+		foodName.setText("Enter Food Name");
 
 		TextField calories = new TextField();
 		calories.setMaxWidth(80);
@@ -75,29 +75,29 @@ public class Main extends Application {
 		calories.setLayoutY(380);
 		calories.setText("Enter Calories");
 
-		TextField fiber = new TextField();
-		fiber.setMaxWidth(80);
-		fiber.setLayoutX(210);
-		fiber.setLayoutY(380);
-		fiber.setText("Enter Fiber");
-
 		TextField fat = new TextField();
 		fat.setMaxWidth(80);
-		fat.setLayoutX(310);
+		fat.setLayoutX(210);
 		fat.setLayoutY(380);
 		fat.setText("Enter Fat");
 
-		TextField protein = new TextField();
-		protein.setMaxWidth(80);
-		protein.setLayoutX(410);
-		protein.setLayoutY(380);
-		protein.setText("Enter Protein");
-
 		TextField carbs = new TextField();
 		carbs.setMaxWidth(80);
-		carbs.setLayoutX(510);
+		carbs.setLayoutX(310);
 		carbs.setLayoutY(380);
 		carbs.setText("Enter Carbs");
+
+		TextField fiber = new TextField();
+		fiber.setMaxWidth(80);
+		fiber.setLayoutX(410);
+		fiber.setLayoutY(380);
+		fiber.setText("Enter Fiber");
+
+		TextField protein = new TextField();
+		protein.setMaxWidth(80);
+		protein.setLayoutX(510);
+		protein.setLayoutY(380);
+		protein.setText("Enter Protein");
 
 		TextField file = new TextField();
 		file.setMaxWidth(200);
