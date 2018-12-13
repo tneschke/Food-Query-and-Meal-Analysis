@@ -1,3 +1,19 @@
+/**
+ * Filename:   FoodData.java
+ * Project:    Meal Analysis M3
+ * Authors:    Kiara Mutschler, Teague Neschke, Wes Koerner, Nathan Frank, Sneha Polishetty 
+ *
+ * Semester:   Fall 2018
+ * Course:     CS400
+ * Lecture:    002 (Sneha, Wes) & 001 (Kiara, Teague, Nathan) 
+ * 
+ * Due Date:   Before 10pm on December 12, 2018
+ * Version:    1.0
+ * 
+ * Credits:    none
+ * 
+ * Bugs:       no known bugs, but not complete either
+ */
 package application;
 
 import java.io.BufferedReader;
@@ -121,7 +137,14 @@ public class FoodData implements FoodDataADT<FoodItem> {
 	public void addFoodItem(FoodItem foodItem) {
 		foodItemList.add(foodItem);
 	}
-
+	
+	/*
+	 * (non-Javadoc)
+	 * @see skeleton.FoodDataADT#addFoodItem(skeleton.FoodItem)
+	 */
+	public void removeFoodItem(FoodItem foodItem) {
+		foodItemList.remove(foodItem);
+	}
 	/*
 	 * (non-Javadoc)
 	 * @see skeleton.FoodDataADT#getAllFoodItems()
