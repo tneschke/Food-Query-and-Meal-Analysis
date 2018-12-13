@@ -128,29 +128,8 @@ public class FoodTableSample {
 		proteinCol.setMinWidth(100);
 		proteinCol.setCellValueFactory(new PropertyValueFactory<>("protein"));
 
-		TableColumn<TableItem, String> addItemCol = new TableColumn<>("Add Item");
-		addItemCol.setMinWidth(100);
-		addItemCol.setCellValueFactory(new PropertyValueFactory<>("add item"));
-
-		// creates a column where user can remove or add fooditem in the selected row
-		TableColumn<TableItem, Boolean> actionCol = new TableColumn<>("Add/Delete");
-		actionCol.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<TableItem, Boolean>, ObservableValue<Boolean>>() {
-					@Override
-					public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<TableItem, Boolean> features) {
-						return new SimpleBooleanProperty(features.getValue() != null);
-					}
-				});
-
-		actionCol.setCellFactory(new Callback<TableColumn<TableItem, Boolean>, TableCell<TableItem, Boolean>>() {
-			@Override
-			public TableCell<TableItem, Boolean> call(TableColumn<TableItem, Boolean> foodItemBoolTableCol) {
-				return new AddItemCell(stage, table);
-			}
-		});
-
 		table.setItems(data);
-		table.getColumns().addAll(nameCol, caloriesCol, fatCol, carbsCol, fiberCol, proteinCol, actionCol);
+		table.getColumns().addAll(nameCol, caloriesCol, fatCol, carbsCol, fiberCol, proteinCol);
 
 		final VBox vbox = new VBox();
 		vbox.setSpacing(3);
@@ -161,27 +140,6 @@ public class FoodTableSample {
 		table.setLayoutX(x + 150);
 		table.setLayoutY(y);
 		return table;
-	}
-
-	// creates the "+/-" button contained in each row of the food item
-	private class AddItemCell extends TableCell<TableItem, Boolean> {
-		final Button addButton = new Button("+/-");
-		final StackPane paddedButton = new StackPane();
-		final DoubleProperty buttonY = new SimpleDoubleProperty();
-
-		AddItemCell(final Stage stage, final TableView table) {
-			paddedButton.setPadding(new Insets(3));
-			paddedButton.getChildren().add(addButton);
-			addButton.setOnMousePressed(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent mouseEvent) {
-					buttonY.set(mouseEvent.getScreenY());
-					;
-				}
-			});
-			setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-			setGraphic(paddedButton);
-		}
 	}
 
 	/**
