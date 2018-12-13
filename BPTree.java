@@ -14,6 +14,7 @@
  * 
  * Bugs:       no known bugs, but not complete either
  */
+
 package application;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +40,7 @@ import java.util.Random;
  * @param <K> key - expect a string that is the type of id for each item
  * @param <V> value - expect a user-defined type that stores all data for a food item
  */
+
 public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
 
     // Root of the tree
@@ -251,16 +253,6 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
                             Node sibling =  this.split();
                             InternalNode parent = this.getParent(key, this);
                             parent.insertChild(sibling.getFirstLeafKey(), sibling);
-                            int result = Collections.binarySearch(parent.keys, key);
-                            /*
-                            if(result >= 0) {
-                                parent.keys.add(result , sibling.getFirstLeafKey());
-                                parent.children.add(result , sibling);
-                            } else {
-                                parent.keys.add(-result - 1, sibling.getFirstLeafKey());
-                                parent.children.add(-result, sibling);
-                            }
-                            */
                         }
                     }
                 }
@@ -308,10 +300,10 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
         }
                
         private InternalNode getParent(K key, InternalNode child) {
-            Node node = root; // Node starts at root and is moved down till we find the child passed in
-            Node prev = null; // This node is always the parent of node. which is how we get the parent
+            Node node = root;
+            Node prev = null;
 
-            // Loops through tree and finds the parent
+            // Loops through to find parent
             while (!node.equals(child)) {
             prev = node;
             node = ((InternalNode) node).getChild(key);
@@ -399,14 +391,9 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
          */
         void insert(K key, V value) {          
             int result = Collections.binarySearch(keys, key); // Store ret val
-            // int lastIndex = keys.lastIndexOf(key);
                 if(result >= 0) {
-                   // if(lastIndex == result) {
                     keys.add((result),key);
                     values.add((result), value);
-                    //} else {
-                       // keys.add((result + 1),key);
-                       // values.add((result + 1), value);
                 } else {
                     if(keys.size()==0) {
                         keys.add(0,key);
@@ -416,7 +403,7 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
                         values.add(-result - 1,value);
                     }
                 }
-                if(this.isOverflow() && (root instanceof BPTree.LeafNode)) {
+                if(this.isOverflow() && (root instanceof BPTree.LeafNode)) { //Corner case for first split
                     Node brother = split();
                     InternalNode newRoot = new InternalNode();
                         newRoot.keys.add(brother.getFirstLeafKey());
@@ -514,15 +501,6 @@ public class BPTree<K extends Comparable<K>, V> implements BPTreeADT<K, V> {
             bpTree.insert(j, j);
             System.out.println("\n\nTree structure:\n" + bpTree.toString());
         }
-        /*for (double i = 1; i <= 400; i++) {
-            double p = rnd1.nextInt(400) + 1;
-            Double j = dd[rnd1.nextInt(4)];
-            System.out.print("\nInserted Pair: " + "(" + p + ", " + p + ")");
-            list.add(p);
-            bpTree.insert(p, p);
-            System.out.println("\n\nTree structure:\n" + bpTree.toString());
-        	}
-        	*/
         List<Double> filteredValues = bpTree.rangeSearch(0d,">=");
         System.out.println("Filtered values: " + filteredValues.toString());
         }
