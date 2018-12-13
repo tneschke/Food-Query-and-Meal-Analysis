@@ -1,7 +1,10 @@
+package application;
 
 import java.util.List;
 
+import application.FoodTableSample.TableItem;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
@@ -110,7 +113,7 @@ public class Main extends Application {
 		Text fatCount = new Text(13, 665, "18 g");
 		Text mealProtein = new Text(10, 700, "Protein");
 		Text proteinCount = new Text(13, 715, "1 g");
-
+	    
 		addFoodTitle.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -150,9 +153,9 @@ public class Main extends Application {
 					newFood.addNutrient("fiber", fib);
 					newFood.addNutrient("fat", fa);
 					newFood.addNutrient("protein", prot);
-					newFood.addNutrient("carbs", carb);
+					newFood.addNutrient("carbohydrate", carb);
 					foodList.addFoodItem(newFood);
-					FoodTableSample tableUpdate = new FoodTableSample(applicationStage, 220, 475, foodList);
+					foodTable1.update(foodList);
 					count++;
 				} else {
 					Alert alert = new Alert(AlertType.ERROR, "Enter a positive number.");
