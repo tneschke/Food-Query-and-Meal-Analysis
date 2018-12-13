@@ -1,3 +1,4 @@
+package application;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class Main extends Application {
 		Button importFoodList = new Button("Import Food List");
 		Button saveFoodList = new Button("Save Food List");
 		Button addFoodTitle = new Button("Add New Food"); //button done
-		Button analyzeFood = new Button("Analyze Food");
+		Button analyzeFood = new Button("Analyze Meal");
 		Button addToMyList = new Button("Add Food to My Meal");
 
 		analyzeFood.setLayoutX(10);
@@ -111,14 +112,21 @@ public class Main extends Application {
 		addFood.setLayoutY(390);
 		addFood.setText("Food Name");
 
-		Text mealCalories = new Text(10, 550, "Calories");
-		Text calorieCount = new Text(13, 565, "300");
-		Text mealFiber = new Text(10, 600, "Fiber");
-		Text fiberCount = new Text(13, 615, "18 g");
-		Text mealFat = new Text(10, 650, "Fat");
-		Text fatCount = new Text(13, 665, "18 g");
-		Text mealProtein = new Text(10, 700, "Protein");
-		Text proteinCount = new Text(13, 715, "1 g");
+		Text mealCalories = new Text(10, 550, "Total Calories");
+		Text calorieCount = new Text(13, 565, "0");
+		
+		Text mealFat = new Text(10, 600, "Total Fats");
+		Text fatCount = new Text(13, 615, "0 g");
+		
+		Text mealCarb = new Text(10, 650, "Total Carbs");
+		Text carbCount = new Text(13, 665, "0 g");
+		
+		Text mealProtein = new Text(10, 750, "Total Protein");
+		Text proteinCount = new Text(13, 770, "0 g");
+
+		
+		Text mealFiber = new Text(10, 700, "Total Fiber");
+		Text fiberCount = new Text(13, 715, "0 g");
 
 		addFoodTitle.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -201,29 +209,32 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				//maybe change to new food list they add food to -teague
-				List<FoodItem> foods = foodList.getAllFoodItems();
+				List<FoodItem> eles = myFood.getAllFoodItems();
 				int cal = 0;   
 				int fib = 0;   
 				int fat = 0;
 				int prot = 0;
-				for(FoodItem food : foods) {
+				int carb = 0;
+				for(FoodItem food : eles) {
 					cal += food.getNutrientValue("calories");
 					fib += food.getNutrientValue("fiber");
 					fat += food.getNutrientValue("fat");
-					prot += food.getNutrientValue("prot");
+					prot += food.getNutrientValue("protein");
+					carb += food.getNutrientValue("carbohydrate");
 				}
 				calorieCount.setText(Integer.toString(cal));
-				fiberCount.setText(Integer.toString(fib));
-				proteinCount.setText(Integer.toString(prot));
-				fatCount.setText(Integer.toString(fat));
+				fatCount.setText(Integer.toString(fat) + " g");
+				fiberCount.setText(Integer.toString(fib) + " g");
+				proteinCount.setText(Integer.toString(prot) +" g");
+				carbCount.setText(Integer.toString(carb)+ " g");
 			} 
 		});
 
 		Group group = new Group(mainTitle, foodItems,importFoodList,saveFoodList,addFoodTitle,
 				foodName, addFood, addToMyList, calories, fiber, fat, protein, file, yourMeal, mealCalories,
 				mealFiber, mealFat, mealProtein, calorieCount, fiberCount, fatCount, proteinCount, carbs,
-				analyzeFood, tableView.start(), foodTable1.start(), foodTable2.start());
-		Scene scene = new Scene(group, 2000, 900);           // Add canvas to panes
+				analyzeFood, carbCount, mealCarb, tableView.start(), foodTable1.start(), foodTable2.start());
+		Scene scene = new Scene(group, 1900, 900);           // Add canvas to panes
 		applicationStage.setTitle("Meal Planner"); // Set window's title
 		applicationStage.setScene(scene);          // Set window's scene
 		applicationStage.show();                   // Display window
