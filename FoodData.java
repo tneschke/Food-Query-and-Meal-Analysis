@@ -1,20 +1,4 @@
-/**
- * Filename:   FoodData.java
- * Project:    Meal Analysis M3
- * Authors:    Kiara Mutschler, Teague Neschke, Wes Koerner, Nathan Frank, Sneha Polishetty 
- *
- * Semester:   Fall 2018
- * Course:     CS400
- * Lecture:    002 (Sneha, Wes) & 001 (Kiara, Teague, Nathan) 
- * 
- * Due Date:   Before 10pm on December 12, 2018
- * Version:    1.0
- * 
- * Credits:    none
- * 
- * Bugs:       no known bugs, but not complete either
- */
-package application;
+
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -50,7 +34,20 @@ public class FoodData implements FoodDataADT<FoodItem> {
 	 * Public constructor
 	 */
 	public FoodData() {
+		indexes = new HashMap<String, BPTree<Double, FoodItem>>();
 		foodItemList = new LinkedList<FoodItem>();
+		BPTree<Double, FoodItem> calories = new BPTree<Double, FoodItem>(3);
+        BPTree<Double, FoodItem> fat = new BPTree<Double, FoodItem>(3);
+        BPTree<Double, FoodItem> fiber = new BPTree<Double, FoodItem>(3);
+        BPTree<Double, FoodItem> protein = new BPTree<Double, FoodItem>(3);
+        BPTree<Double, FoodItem> carbs = new BPTree<Double, FoodItem>(3);
+        
+        
+        indexes.put("calories", calories);
+        indexes.put("fat", fat);
+        indexes.put("fiber", fiber);
+        indexes.put("protein", protein);
+        indexes.put("carbohydrate", carbs);
 	}
 
 
@@ -70,6 +67,7 @@ public class FoodData implements FoodDataADT<FoodItem> {
 
 				for(int i = 2; i < 12; i+=2 ) {
 					newFood.addNutrient(data[i], Double.parseDouble(data[i+1]));
+					indexes.get(data[i]).insert(Double.parseDouble(data[i+1]), newFood);
 				}
 				foodItemList.add(newFood);
 			}
@@ -112,22 +110,41 @@ public class FoodData implements FoodDataADT<FoodItem> {
 	 */
 	@Override
 	public List<FoodItem> filterByNutrients(List<String> rules) {
-		List<FoodItem> newList = new LinkedList<FoodItem>();
-		for(FoodItem food : foodItemList) {
-			newList.add(food);
-		}
-		newList = foodItemList;
-		for (String rule : rules) {
-			String[] ruleArray = rule.split("\\s+");
-			for(FoodItem food : foodItemList) {
-				if(food.getNutrientValue(ruleArray[0]) < (Double.parseDouble(ruleArray[1]))
-						&& food.getNutrientValue(ruleArray[0]) > (Double.parseDouble(ruleArray[2]))) {
-					newList.remove(food);
-				}
-			}
-		}
-		return newList;
-	}
+		
+    	List<FoodItem> newList = new LinkedList<FoodItem>();
+    	for(FoodItem food : foodItemList) {
+    		newList.add(food); 
+    	}
+    	List<FoodItem> tempList = new LinkedList<FoodItem>();
+        for (String rule : rules) {
+        	String[] ruleArray = rule.split("\\s+");
+        	System.out.println(ruleArray[0]);
+        	System.out.println(ruleArray[1]);
+        	System.out.println(ruleArray[2]);
+        	tempList = indexes.get(ruleArray[0]).rangeSearch(Double.parseDouble(ruleArray[2]), ruleArray[1]);
+//	        	for(FoodItem food : foodItemList) {
+//	        		newList = indexes.get(key)
+//	            	if(food.getNutrientValue(ruleArray[0]) < (Double.parseDouble(ruleArray[1]))
+//	            			&& food.getNutrientValue(ruleArray[0]) > (Double.parseDouble(ruleArray[2]))) {
+//	            		newList.remove(food);
+//	            	}
+//	            }
+        	System.out.println(newList.size());
+
+        	System.out.println(tempList.size());
+        	
+        	FoodItem[] foodArray = newList.toArray(new FoodItem[newList.size()]);
+        	
+        	for (FoodItem food : foodArray) {
+        		if(!tempList.contains(food)) {
+        			newList.remove(food);
+        		}
+        	}
+        	
+        }
+        return newList;
+    }
+
 
 	/*
 	 * (non-Javadoc)
@@ -136,15 +153,13 @@ public class FoodData implements FoodDataADT<FoodItem> {
 	@Override
 	public void addFoodItem(FoodItem foodItem) {
 		foodItemList.add(foodItem);
+		indexes.get("calories").insert(foodItem.getNutrientValue("calories"), foodItem);
+        indexes.get("fat").insert(foodItem.getNutrientValue("fat"), foodItem);
+        indexes.get("protein").insert(foodItem.getNutrientValue("protein"), foodItem);
+        indexes.get("carbohydrate").insert(foodItem.getNutrientValue("carbohydrate"), foodItem);
+        indexes.get("fiber").insert(foodItem.getNutrientValue("fiber"), foodItem);
 	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see skeleton.FoodDataADT#addFoodItem(skeleton.FoodItem)
-	 */
-	public void removeFoodItem(FoodItem foodItem) {
-		foodItemList.remove(foodItem);
-	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see skeleton.FoodDataADT#getAllFoodItems()

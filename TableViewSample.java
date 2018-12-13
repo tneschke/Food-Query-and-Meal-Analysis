@@ -1,20 +1,4 @@
-/**
- * Filename:   TableViewSample.java
- * Project:    Meal Analysis M3
- * Authors:    Kiara Mutschler, Teague Neschke, Wes Koerner, Nathan Frank, Sneha Polishetty 
- *
- * Semester:   Fall 2018
- * Course:     CS400
- * Lecture:    002 (Sneha, Wes) & 001 (Kiara, Teague, Nathan) 
- * 
- * Due Date:   Before 10pm on December 12, 2018
- * Version:    1.0
- * 
- * Credits:    none
- * 
- * Bugs:       no known bugs, but not complete either
- */
-package application;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,19 +12,15 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
-/**
- * This class displays the food filtering options. This class allows the user to
- * apply nutrient filters to view foods with certain nutrients values based on
- * rules.
- * 
- * @author Kiara Mutschler, Teague Neschke, Wes Koerner, Nathan Frank, Sneha
- *         Polishetty
- */
-public class TableViewSample {
-	private FoodData data = new FoodData();
-
+public class TableViewSample{
+	private FoodData data;
+	FoodTableSample table;
+	public TableViewSample(FoodData data1, FoodTableSample table1) {
+	      data = data1;
+	      table = table1;
+	}
     public GridPane start() {
-        //Initialize the nutrient labels
+
         Font comicSans = new Font("Comic Sans", 12);
         final Label calorie = new Label("Calories");
         calorie.setFont(comicSans);
@@ -64,7 +44,27 @@ public class TableViewSample {
 
         Button analyzeButton = new Button("Filter List");
         
-        //the following code below are the text fields for all possible filters that can be applied
+
+        // ComboBox<String> calorieBox = new ComboBox<String>();
+        // calorieBox.getItems().add("<");
+        // calorieBox.getItems().add(">");
+        // calorieBox.getItems().add("=");
+        //
+        // ComboBox<String> fiberBox = new ComboBox<String>();
+        // fiberBox.getItems().add("<");
+        // fiberBox.getItems().add(">");
+        // fiberBox.getItems().add("=");
+        //
+        // ComboBox<String> fatMinBox = new ComboBox<String>();
+        // fatMinBox.getItems().add("<");
+        // fatMinBox.getItems().add(">");
+        // fatMinBox.getItems().add("=");
+        //
+        // ComboBox<String> proteinMinBox = new ComboBox<String>();
+        // proteinMinBox.getItems().add("<");
+        // proteinMinBox.getItems().add(">");
+        // proteinMinBox.getItems().add("=");
+
         TextField calorieMinText = new TextField();
         calorieMinText.setPrefColumnCount(10);
         calorieMinText.setEditable(true);
@@ -140,18 +140,18 @@ public class TableViewSample {
         proteinExactText.setEditable(true);
         proteinExactText.setText("Exact Protein");
 
-        
-        //add text fields to the gridPane
         gridPane.add(calorie, 0, 0);
         gridPane.add(calorieMinText, 0, 1);
         gridPane.add(calorieMaxText, 1, 1);
         gridPane.add(calorieExactText, 2, 1);
 
+        // gridPane.add(calorieBox, 0, 1);
         gridPane.add(fiber, 0, 2);
         gridPane.add(fiberMinText, 0, 3);
         gridPane.add(fiberMaxText, 1, 3);
         gridPane.add(fiberExactText, 2, 3);
 
+        // gridPane.add(fiberBox, 0, 3); //edited
         gridPane.add(fat, 0, 4);
         gridPane.add(fatMinText, 0, 5);
         gridPane.add(fatMaxText, 1, 5);
@@ -162,25 +162,27 @@ public class TableViewSample {
         gridPane.add(carbsMaxText, 1, 7);
         gridPane.add(carbsExactText, 2, 7);
 
+        // gridPane.add(fatMinBox,0 , 5);
         gridPane.add(protein, 0, 8);
         gridPane.add(proteinMinText, 0, 9);
         gridPane.add(proteinMaxText, 1, 9);
         gridPane.add(proteinExactText, 2, 9);
         gridPane.add(foodSearch, 0, 10);
         gridPane.add(analyzeButton, 1, 10);
+        // gridPane.add(proteinMinBox, 0, 7);
+
 
         analyzeButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 List<String> rules = new ArrayList<String>();
                 List<FoodItem> foods = new ArrayList<FoodItem>();
-                //the following are user inputs which will be converted to double values
                 double minCalories, maxCalories, exactCalories;
                 double minFiber, maxFiber, exactFiber;
                 double minFat, maxFat, exactFat;
                 double minProtein, maxProtein, exactProtein;
                 double minCarbs, maxCarbs, exactCarbs;
-                // the following are filter rules names
+                // rules
                 String calMinRule, calMaxRule, calExactRule;
                 String fiberMinRule, fiberMaxRule, fiberExactRule;
                 String fatMinRule, fatMaxRule, fatExactRule;
@@ -188,7 +190,7 @@ public class TableViewSample {
                 String carbsMaxRule, carbsMinRule, carbsExactRule;
 
                 try {
-                    //calls clear methods to check if user has entered a numeric value in the field 
+                    
                     String minCalVal = clearMinCal(calorieMinText.getText());
                     String maxCalVal = clearMaxCal(calorieMaxText.getText());
                     String exactCalVal = clearExactCal(calorieExactText.getText());
@@ -209,99 +211,118 @@ public class TableViewSample {
                     String maxProteinVal = clearMaxProtein(proteinMaxText.getText());
                     String exactProteinVal = clearExactProtein(proteinExactText.getText());
 
-                    // if user has enter value, create rule and add rule to list
-                    if (minCalVal != null) {
+
+
+
+
+
+
+
+
+
+                    System.out.println("min" + minCalVal);
+                    
+                    
+                    if ((minCalVal != null ) && (!minCalVal.isEmpty())) {
                         minCalories = Double.parseDouble(minCalVal);
                         calMinRule = "calories >= " + minCalories;
                         rules.add(calMinRule);
                     }
-                    if (maxCalVal != null) {
+                    if (maxCalVal != null && (!maxCalVal.isEmpty())) {
                         maxCalories = Double.parseDouble(maxCalVal);
                         calMaxRule = "calories <= " + maxCalories;
                         rules.add(calMaxRule);
                     }
-                    if (exactCalVal != null) {
+                    if (exactCalVal != null && (!exactCalVal.isEmpty())) {
                         exactCalories = Double.parseDouble(exactCalVal);
                         calExactRule = "calories == " + exactCalories;
                         rules.add(calExactRule);
                     }
-                    if (minFiberVal != null) {
+                    //fiber
+                    if (minFiberVal != null && (!minFiberVal.isEmpty())) {
                         minFiber = Double.parseDouble(minFiberVal);
                        fiberMinRule = "fiber >= " + minFiber;
                         rules.add(fiberMinRule);
                     }
-                    if (maxFiberVal != null) {
+                    if (maxFiberVal != null && (!maxFiberVal.isEmpty())) {
                         maxFiber = Double.parseDouble(maxFiberVal);
                         fiberMaxRule = "fiber <= " + maxFiber;
                         rules.add(fiberMaxRule);
                     }
-                    if (exactFiberVal != null) {
+                    if (exactFiberVal != null && (!exactFiberVal.isEmpty())) {
                         exactFiber = Double.parseDouble(exactFiberVal);
                         fiberExactRule = "fiber == " + exactFiber;
                         rules.add(fiberExactRule);
                     }
 
-                    if (minFatVal != null) {
+                    if (minFatVal != null && (!minFatVal.isEmpty())) {
                         minFat = Double.parseDouble(minFatVal);
                        fatMinRule = "fat >= " + minFat;
                         rules.add(fatMinRule);
                     }
-                    if (maxFatVal != null) {
+                    if (maxFatVal != null && (!maxFatVal.isEmpty())) {
                         maxFat = Double.parseDouble(maxFatVal);
                         fatMaxRule = "fat <= " + maxFat;
                         rules.add(fatMaxRule);
                     }
-                    if (exactFatVal != null) {
+                    if (exactFatVal != null && (!exactFatVal.isEmpty())) {
                         exactFat = Double.parseDouble(exactFatVal);
                         fatExactRule = "fat == " + exactFat;
                         rules.add(fatExactRule);
                     }
-                    if (minCarbVal != null) {
+                    if (minCarbVal != null && (!minCarbVal.isEmpty())) {
                         minCarbs = Double.parseDouble(minCarbVal);
                         carbsMinRule = "carbs >= " + minCarbs;
                         rules.add(carbsMinRule);
                     }
-                    if (maxCarbVal != null) {
+                    if (maxCarbVal != null && (!maxCarbVal.isEmpty())) {
                         maxCarbs = Double.parseDouble(minCarbVal);
                         carbsMaxRule = "carbs <= " + maxCarbs;
                         rules.add(carbsMaxRule);
                     }
-                    if (exactCarbVal != null) {
+                    if (exactCarbVal != null && (!exactCarbVal.isEmpty())) {
                         exactCarbs = Double.parseDouble(exactCarbVal);
                         carbsExactRule = "carbs == " + exactCarbs;
                         rules.add(carbsExactRule);
                     } 
-                    if (minProteinVal != null) {
+                    if (minProteinVal != null && (!minProteinVal.isEmpty())) {
                         minProtein = Double.parseDouble(minProteinVal);
                         proteinMinRule = "protein >= " + minProtein;
                         rules.add(proteinMinRule);
                     }
-                    if (maxProteinVal != null) {
+                    if (maxProteinVal != null && (!maxProteinVal.isEmpty())) {
                         maxProtein = Double.parseDouble(maxProteinVal);
                         proteinMaxRule = "protein <= " + maxProtein;
                         rules.add(proteinMaxRule);
                     }
-                    if (exactProteinVal != null) {
+                    if (exactProteinVal != null && (!exactProteinVal.isEmpty())) {
                         exactProtein = Double.parseDouble(exactProteinVal);
                         proteinExactRule = "protein == " + exactProtein;
                         rules.add(proteinExactRule);
                     }
 
     
-                    foods = data.filterByNutrients(rules);
+                    List<FoodItem> tempList = data.filterByNutrients(rules);
+                    FoodData newList = new FoodData();
+                    for(FoodItem food : tempList) {
+                    	newList.addFoodItem(food);
+                    }
+                    table.update(newList);
                 } catch (Exception e) {
                     Alert alert = new Alert(AlertType.ERROR, "Please enter valid numbers only.");
+                    e.printStackTrace();
                     alert.showAndWait();
                 }
             }
         });
 
+
         gridPane.setLayoutX(10);
         gridPane.setLayoutY(120);
+        // calories fiber fat carbs protein
         return gridPane;
     }
    
-    		//the following methods check if the user has entered a value in the text field
         private String clearMinCal(String calorieMinText) {
         if(calorieMinText.equals("Min Calories")) {
             calorieMinText = null;
@@ -400,6 +421,8 @@ public class TableViewSample {
                 proteinExactText = null;
             }
             return proteinExactText;
-            }  
+            }
+        
+        
 
 }
