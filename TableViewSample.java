@@ -40,6 +40,7 @@ public class TableViewSample {
 	private FoodData data = new FoodData();
 
     public GridPane start() {
+        //Initialize the nutrient labels
         Font comicSans = new Font("Comic Sans", 12);
         final Label calorie = new Label("Calories");
         calorie.setFont(comicSans);
@@ -139,6 +140,8 @@ public class TableViewSample {
         proteinExactText.setEditable(true);
         proteinExactText.setText("Exact Protein");
 
+        
+        //add text fields to the gridPane
         gridPane.add(calorie, 0, 0);
         gridPane.add(calorieMinText, 0, 1);
         gridPane.add(calorieMaxText, 1, 1);
@@ -185,7 +188,7 @@ public class TableViewSample {
                 String carbsMaxRule, carbsMinRule, carbsExactRule;
 
                 try {
-                    
+                    //calls clear methods to check if user has entered a numeric value in the field 
                     String minCalVal = clearMinCal(calorieMinText.getText());
                     String maxCalVal = clearMaxCal(calorieMaxText.getText());
                     String exactCalVal = clearExactCal(calorieExactText.getText());
@@ -206,6 +209,7 @@ public class TableViewSample {
                     String maxProteinVal = clearMaxProtein(proteinMaxText.getText());
                     String exactProteinVal = clearExactProtein(proteinExactText.getText());
 
+                    // if user has enter value, create rule and add rule to list
                     if (minCalVal != null) {
                         minCalories = Double.parseDouble(minCalVal);
                         calMinRule = "calories >= " + minCalories;
@@ -297,7 +301,7 @@ public class TableViewSample {
         return gridPane;
     }
    
-    		//the following methods clear the respective text field once the analyze food button is clicked
+    		//the following methods check if the user has entered a value in the text field
         private String clearMinCal(String calorieMinText) {
         if(calorieMinText.equals("Min Calories")) {
             calorieMinText = null;
