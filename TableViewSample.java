@@ -1,5 +1,20 @@
 
-
+/**
+ * Filename:   TableViewSample.java
+ * Project:    Meal Analysis M3
+ * Authors:    Kiara Mutschler, Teague Neschke, Wes Koerner, Nathan Frank, Sneha Polishetty 
+ *
+ * Semester:   Fall 2018
+ * Course:     CS400
+ * Lecture:    002 (Sneha, Wes) & 001 (Kiara, Teague, Nathan) 
+ * 
+ * Due Date:   Before 10pm on December 12, 2018
+ * Version:    1.0
+ * 
+ * Credits:    none
+ * 
+ * Bugs:       no known bugs, but not complete either
+ */
 import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
@@ -12,6 +27,14 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
+/**
+ * This class displays the food filtering options. This class allows the user to
+ * apply nutrient filters to view foods with certain nutrients values based on
+ * rules.
+ * 
+ * @author Kiara Mutschler, Teague Neschke, Wes Koerner, Nathan Frank, Sneha
+ *         Polishetty
+ */
 public class TableViewSample{
 	private FoodData data;
 	FoodTableSample table;
@@ -21,6 +44,7 @@ public class TableViewSample{
 	}
     public GridPane start() {
 
+	    //Initialize nutrient values
         Font comicSans = new Font("Comic Sans", 12);
         final Label calorie = new Label("Calories");
         calorie.setFont(comicSans);
@@ -65,6 +89,7 @@ public class TableViewSample{
         // proteinMinBox.getItems().add(">");
         // proteinMinBox.getItems().add("=");
 
+	//the following code below are the text fields for all possible filters that can be applied
         TextField calorieMinText = new TextField();
         calorieMinText.setPrefColumnCount(10);
         calorieMinText.setEditable(true);
@@ -177,12 +202,13 @@ public class TableViewSample{
             public void handle(ActionEvent event) {
                 List<String> rules = new ArrayList<String>();
                 List<FoodItem> foods = new ArrayList<FoodItem>();
+		 //the following are user inputs which will be converted to double values
                 double minCalories, maxCalories, exactCalories;
                 double minFiber, maxFiber, exactFiber;
                 double minFat, maxFat, exactFat;
                 double minProtein, maxProtein, exactProtein;
                 double minCarbs, maxCarbs, exactCarbs;
-                // rules
+		// the following are filter rules names
                 String calMinRule, calMaxRule, calExactRule;
                 String fiberMinRule, fiberMaxRule, fiberExactRule;
                 String fatMinRule, fatMaxRule, fatExactRule;
@@ -190,7 +216,7 @@ public class TableViewSample{
                 String carbsMaxRule, carbsMinRule, carbsExactRule;
 
                 try {
-                    
+                   //calls clear methods to check if user has entered a numeric value in the field   
                     String minCalVal = clearMinCal(calorieMinText.getText());
                     String maxCalVal = clearMaxCal(calorieMaxText.getText());
                     String exactCalVal = clearExactCal(calorieExactText.getText());
@@ -220,7 +246,7 @@ public class TableViewSample{
 
 
 
-                    System.out.println("min" + minCalVal);
+                   // if user has enter value, create rule and add rule to list
                     
                     
                     if ((minCalVal != null ) && (!minCalVal.isEmpty())) {
@@ -322,7 +348,7 @@ public class TableViewSample{
         // calories fiber fat carbs protein
         return gridPane;
     }
-   
+   //the following methods check if the user has entered a value in the text field
         private String clearMinCal(String calorieMinText) {
         if(calorieMinText.equals("Min Calories")) {
             calorieMinText = null;
