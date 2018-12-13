@@ -38,7 +38,7 @@ public class TableViewSample {
         foodSearch.setEditable(true);
         foodSearch.setText("Search");
 
-        Button analyzeButton = new Button("Analyze");
+        Button analyzeButton = new Button("Filter List");
         
 
         // ComboBox<String> calorieBox = new ComboBox<String>();
@@ -187,113 +187,119 @@ public class TableViewSample {
 
                 try {
                     
-                    clearCal(calorieMinText.getText(),calorieExactText.getText(),calorieMaxText.getText());
-                    clearProtein(proteinMinText.getText(),proteinExactText.getText(),proteinMaxText.getText());
-                    clearFiber(fiberMinText.getText(),fiberExactText.getText(),fiberMaxText.getText());
-                    clearCarbs(carbsMinText.getText(),carbsExactText.getText(),carbsMaxText.getText());
-                    clearFat(fatMinText.getText(),fatExactText.getText(),fatMaxText.getText());
+                    String minCalVal = clearMinCal(calorieMinText.getText());
+                    String maxCalVal = clearMaxCal(calorieMaxText.getText());
+                    String exactCalVal = clearExactCal(calorieExactText.getText());
+                    
+                    String minCarbVal = clearMinCarbs(carbsMinText.getText());
+                    String maxCarbVal = clearMaxCarbs(carbsMaxText.getText());
+                    String exactCarbVal = clearExactCarbs(carbsExactText.getText());
+
+                    String minFatVal = clearMinFat(fatMinText.getText());
+                    String maxFatVal = clearMaxFat(fatMaxText.getText());
+                    String exactFatVal = clearExactFat(fatExactText.getText());
+                    
+                    String minFiberVal = clearMinFiber(fiberMinText.getText());
+                    String maxFiberVal = clearMaxFiber(fiberMaxText.getText());
+                    String exactFiberVal = clearExactFiber(fiberExactText.getText());
+                    
+                    String minProteinVal = clearMinProtein(proteinMinText.getText());
+                    String maxProteinVal = clearMaxProtein(proteinMaxText.getText());
+                    String exactProteinVal = clearExactProtein(proteinExactText.getText());
 
 
 
-//                    calorieMinText.clear();
-//                    calorieMaxText.clear();
-//                    calorieExactText.clear();
-//                    fiberMinText.clear();
-//                    fiberMaxText.clear();
-//                    fiberExactText.clear();
-//                    fatMinText.clear();
-//                    fatMaxText.clear();
-//                    fatExactText.clear();
-//                    carbsMinText.clear();
-//                    carbsMaxText.clear();
-//                    carbsExactText.clear();
-//                    proteinMinText.clear();
-//                    proteinMaxText.clear();
-//                    proteinExactText.clear();
 
-                    if (calorieMinText != null) {
-                        minCalories = Double.parseDouble(calorieMinText.getText());
+
+
+
+
+
+
+
+                    if (minCalVal != null) {
+                        minCalories = Double.parseDouble(minCalVal);
                         calMinRule = "calories >= " + minCalories;
                         rules.add(calMinRule);
                     }
-                    if (calorieMaxText != null) {
-                        maxCalories = Double.parseDouble(calorieMinText.getText());
+                    if (maxCalVal != null) {
+                        maxCalories = Double.parseDouble(maxCalVal);
                         calMaxRule = "calories <= " + maxCalories;
                         rules.add(calMaxRule);
                     }
-                    if (calorieExactText != null) {
-                        exactCalories = Double.parseDouble(calorieMinText.getText());
+                    if (exactCalVal != null) {
+                        exactCalories = Double.parseDouble(exactCalVal);
                         calExactRule = "calories == " + exactCalories;
                         rules.add(calExactRule);
                     }
                     //fiber
-                    if (fiberMinText != null) {
-                        minFiber = Double.parseDouble(fiberMinText.getText());
+                    if (minFiberVal != null) {
+                        minFiber = Double.parseDouble(minFiberVal);
                        fiberMinRule = "fiber >= " + minFiber;
                         rules.add(fiberMinRule);
                     }
-                    if (fiberMaxText != null) {
-                        maxFiber = Double.parseDouble(fiberMinText.getText());
+                    if (maxFiberVal != null) {
+                        maxFiber = Double.parseDouble(maxFiberVal);
                         fiberMaxRule = "fiber <= " + maxFiber;
                         rules.add(fiberMaxRule);
                     }
-                    if (fiberExactText != null) {
-                        exactFiber = Double.parseDouble(fiberMinText.getText());
+                    if (exactFiberVal != null) {
+                        exactFiber = Double.parseDouble(exactFiberVal);
                         fiberExactRule = "fiber == " + exactFiber;
                         rules.add(fiberExactRule);
                     }
 
-                    if (fatMinText != null) {
-                        minFat = Double.parseDouble(fatMinText.getText());
+                    if (minFatVal != null) {
+                        minFat = Double.parseDouble(minFatVal);
                        fatMinRule = "fat >= " + minFat;
                         rules.add(fatMinRule);
                     }
-                    if (fatMaxText != null) {
-                        maxFat = Double.parseDouble(fatMinText.getText());
+                    if (maxFatVal != null) {
+                        maxFat = Double.parseDouble(maxFatVal);
                         fatMaxRule = "fat <= " + maxFat;
                         rules.add(fatMaxRule);
                     }
-                    if (fatExactText != null) {
-                        exactFat = Double.parseDouble(fatMinText.getText());
+                    if (exactFatVal != null) {
+                        exactFat = Double.parseDouble(exactFatVal);
                         fatExactRule = "fat == " + exactFat;
                         rules.add(fatExactRule);
                     }
-                    if (carbsMinText != null) {
-                        minCarbs = Double.parseDouble(carbsMinText.getText());
+                    if (minCarbVal != null) {
+                        minCarbs = Double.parseDouble(minCarbVal);
                         carbsMinRule = "carbs >= " + minCarbs;
                         rules.add(carbsMinRule);
                     }
-                    if (carbsMaxText != null) {
-                        maxCarbs = Double.parseDouble(carbsMinText.getText());
+                    if (maxCarbVal != null) {
+                        maxCarbs = Double.parseDouble(minCarbVal);
                         carbsMaxRule = "carbs <= " + maxCarbs;
                         rules.add(carbsMaxRule);
                     }
-                    if (carbsExactText != null) {
-                        exactCarbs = Double.parseDouble(carbsMinText.getText());
+                    if (exactCarbVal != null) {
+                        exactCarbs = Double.parseDouble(exactCarbVal);
                         carbsExactRule = "carbs == " + exactCarbs;
                         rules.add(carbsExactRule);
                     } 
-                    if (proteinMinText != null) {
-                        minProtein = Double.parseDouble(proteinMinText.getText());
+                    if (minProteinVal != null) {
+                        minProtein = Double.parseDouble(minProteinVal);
                         proteinMinRule = "protein >= " + minProtein;
                         rules.add(proteinMinRule);
                     }
-                    if (proteinMaxText != null) {
-                        maxProtein = Double.parseDouble(proteinMinText.getText());
+                    if (maxProteinVal != null) {
+                        maxProtein = Double.parseDouble(maxProteinVal);
                         proteinMaxRule = "protein <= " + maxProtein;
                         rules.add(proteinMaxRule);
                     }
-                    if (proteinExactText != null) {
-                        exactProtein = Double.parseDouble(proteinMinText.getText());
-                        proteinExactRule = "calories == " + exactProtein;
+                    if (exactProteinVal != null) {
+                        exactProtein = Double.parseDouble(exactProteinVal);
+                        proteinExactRule = "protein == " + exactProtein;
                         rules.add(proteinExactRule);
                     }
 
     
                     foods = data.filterByNutrients(rules);
                 } catch (Exception e) {
-                    //Alert alert = new Alert(AlertType.ERROR, "Please enter valid numbers only.");
-                    //alert.showAndWait();
+                    Alert alert = new Alert(AlertType.ERROR, "Please enter valid numbers only.");
+                    alert.showAndWait();
                 }
             }
         });
@@ -304,61 +310,107 @@ public class TableViewSample {
         // calories fiber fat carbs protein
         return gridPane;
     }
-    private void clearCal(String calorieMinText, String calorieExactText, String calorieMaxText) {
-        if(calorieMaxText.equals("Max Calories")) {
-            calorieMaxText = null;
-        }
+   
+        private String clearMinCal(String calorieMinText) {
         if(calorieMinText.equals("Min Calories")) {
             calorieMinText = null;
         }
-        if(calorieExactText.equals("ExactCalories")) {
-            calorieExactText = null;
+        return calorieMinText;
         }
-    }
-        private void clearFiber(String fiberMinText, String fiberExactText, String fiberMaxText) {
-            if(fiberMaxText.equals("Max Fiber")) {
-                fiberMaxText = null;
+        private String clearMaxCal(String calorieMaxText) {
+            if(calorieMaxText.equals("Max Calories")) {
+                calorieMaxText = null;
+                return calorieMaxText;
             }
-            if(fiberMinText.equals("Min Fiber")) {
-                fiberMinText = null;
+            return calorieMaxText;
             }
-            if(fiberExactText.equals("Exact Fiber")) {
-                fiberExactText = null;
-            }
-        }
-        private void clearFat(String fatMinText, String fatExactText, String fatMaxText) {
-            if(fatMaxText.equals("Max Fat")) {
-                fatMaxText = null;
-            }
-            if(fatMinText.equals("Min Fat")) {
-                fatMinText = null;
-            }
-            if(fatExactText.equals("Exact Fat")) {
-                fatExactText = null;
-            }
-        }
-        private void clearCarbs(String carbsMinText, String carbsExactText, String carbsMaxText) {
+        
+        private String clearMaxCarbs(String carbsMaxText) {
             if(carbsMaxText.equals("Max Carbs")) {
                 carbsMaxText = null;
+                
             }
+            return carbsMaxText;
+            }
+        private String clearMaxFiber(String fiberMaxText) {
+            if(fiberMaxText.equals("Max Fiber")) {
+                fiberMaxText = null;
+                
+            }
+            return fiberMaxText;
+            }
+        private String clearMaxFat(String fatMaxText) {
+            if(fatMaxText.equals("Max Fat")) {
+                fatMaxText = null;
+                
+            }
+            return fatMaxText;
+            }
+        private String clearMaxProtein(String proteinMaxText) {
+            if(proteinMaxText.equals("Max Protein")) {
+                proteinMaxText = null;
+                
+            }
+            return proteinMaxText;
+            }
+        
+        private String clearMinFiber(String fiberMinText) {
+            if(fiberMinText.equals("Min Fiber")) {
+               fiberMinText = null;
+            }
+            return fiberMinText;
+            }
+        private String clearMinCarbs(String carbsMinText) {
             if(carbsMinText.equals("Min Carbs")) {
                 carbsMinText = null;
             }
-            if(carbsExactText.equals("Exact Carbs")) {
-                carbsExactText = null;
+            return carbsMinText;
             }
-        }
-        private void clearProtein(String proteinMinText, String proteinExactText, String proteinMaxText) {
-            if(proteinMaxText.equals("Max Protein")) {
-                proteinMaxText = null;
+        private String clearMinFat(String fatMinText) {
+            if(fatMinText.equals("Min Fat")) {
+                fatMinText = null;
             }
+            return fatMinText;
+            }
+        private String clearMinProtein(String proteinMinText) {
             if(proteinMinText.equals("Min Protein")) {
                 proteinMinText = null;
             }
+            return proteinMinText;
+            }
+        
+        private String clearExactCal(String calMinText) {
+            if(calMinText.equals("Min Calories")) {
+                calMinText = null;
+            }
+            return calMinText;
+            }
+        private String clearExactCarbs(String carbsExactText) {
+            if(carbsExactText.equals("Exact Carbs")) {
+                carbsExactText = null;
+            }
+            return carbsExactText;
+            }
+        private String clearExactFat(String fatExactText) {
+            if(fatExactText.equals("Exact Fat")) {
+                fatExactText = null;
+            }
+            return fatExactText;
+            }
+        private String clearExactFiber(String fiberExactText) {
+            if(fiberExactText.equals("Exact Carbs")) {
+                fiberExactText = null;
+            }
+            return fiberExactText;
+            }
+        
+        private String clearExactProtein(String proteinExactText) {
             if(proteinExactText.equals("Exact Protein")) {
                 proteinExactText = null;
             }
-        }
+            return proteinExactText;
+            }
+        
         
 
 }
