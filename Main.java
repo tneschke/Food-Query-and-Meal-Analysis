@@ -63,11 +63,11 @@ public class Main extends Application {
 		yourMeal.setFont(Font.font("ComicSans", FontWeight.BOLD, 18));
 		yourMeal.setFill(Color.DARKSLATEGREY);
 
-	TextField foodName = new TextField();
+		TextField foodName = new TextField();
 		foodName.setMaxWidth(80);
 		foodName.setLayoutX(10);
 		foodName.setLayoutY(380);
-		foodName.setText("Enter Food Name");
+		foodName.setText("Food Name");
 
 		TextField calories = new TextField();
 		calories.setMaxWidth(80);
@@ -75,27 +75,27 @@ public class Main extends Application {
 		calories.setLayoutY(380);
 		calories.setText("Enter Calories");
 
-		TextField fat = new TextField();
-		fat.setMaxWidth(80);
-		fat.setLayoutX(210);
-		fat.setLayoutY(380);
-		fat.setText("Enter Fat");
-
+		TextField fiber = new TextField();
+		fiber.setMaxWidth(80);
+		fiber.setLayoutX(210);
+		fiber.setLayoutY(380);
+		fiber.setText("Enter Fiber");
+		
 		TextField carbs = new TextField();
 		carbs.setMaxWidth(80);
-		carbs.setLayoutX(310);
+		carbs.setLayoutX(510);
 		carbs.setLayoutY(380);
 		carbs.setText("Enter Carbs");
 
-		TextField fiber = new TextField();
-		fiber.setMaxWidth(80);
-		fiber.setLayoutX(410);
-		fiber.setLayoutY(380);
-		fiber.setText("Enter Fiber");
+		TextField fat = new TextField();
+		fat.setMaxWidth(80);
+		fat.setLayoutX(310);
+		fat.setLayoutY(380);
+		fat.setText("Enter Fat");
 
 		TextField protein = new TextField();
 		protein.setMaxWidth(80);
-		protein.setLayoutX(510);
+		protein.setLayoutX(410);
 		protein.setLayoutY(380);
 		protein.setText("Enter Protein");
 
@@ -141,28 +141,28 @@ public class Main extends Application {
 					protNum = protein.getText();
 					prot = Double.parseDouble(protNum);
 					carbsNum = carbs.getText();
-					carb = Double.parseDouble(protNum);
+					carb = Double.parseDouble(carbsNum);
+					
+					if(prot >= 0 && fa >= 0 && fib >= 0 && cal >= 0) {
+						newFood = new FoodItem(Integer.toString(count), food);
+						newFood.addNutrient("calories", cal);
+						newFood.addNutrient("fiber", fib);
+						newFood.addNutrient("carbohydrate", carb);
+						newFood.addNutrient("fat", fa);
+						newFood.addNutrient("protein", prot);
+						foodList.addFoodItem(newFood);
+						foodTable1.update(foodList);
+						count++;
+					} else {
+						Alert alert = new Alert(AlertType.ERROR, "Enter a positive number.");
+						alert.showAndWait();
+					}
+					return;
 				} catch(Exception e){
 					Alert alert = new Alert(AlertType.ERROR, "Enter all information for a new food.");
 					alert.showAndWait();
 				}
-
-				if(prot >= 0 && fa >= 0 && fib >= 0 && cal >= 0) {
-					newFood = new FoodItem(Integer.toString(count), food);
-					newFood.addNutrient("calories", cal);
-					newFood.addNutrient("fiber", fib);
-					newFood.addNutrient("fat", fa);
-					newFood.addNutrient("protein", prot);
-					newFood.addNutrient("carbohydrate", carb);
-					foodList.addFoodItem(newFood);
-					foodTable1.update(foodList);
-					count++;
-				} else {
-					Alert alert = new Alert(AlertType.ERROR, "Enter a positive number.");
-					alert.showAndWait();
-				}
-				return;
-			} 
+			}
 		});
 
 		importFoodList.setOnAction(new EventHandler<ActionEvent>() {
@@ -206,7 +206,7 @@ public class Main extends Application {
 				foodName, calories, fiber, fat, protein, file, yourMeal, mealCalories,
 				mealFiber, mealFat, mealProtein, calorieCount, fiberCount, fatCount, proteinCount, carbs,
 				analyzeFood, tableView.start(), foodTable1.start(), foodTable2.start());
-		Scene scene = new Scene(group, 1200, 900);           // Add canvas to panes
+		Scene scene = new Scene(group, 2000, 900);           // Add canvas to panes
 		applicationStage.setTitle("Meal Planner"); // Set window's title
 		applicationStage.setScene(scene);          // Set window's scene
 		applicationStage.show();                   // Display window
