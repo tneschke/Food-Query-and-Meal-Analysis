@@ -1,4 +1,19 @@
-
+/**
+ * Filename:   FoodData.java
+ * Project:    Meal Analysis M3
+ * Authors:    Kiara Mutschler, Teague Neschke, Wes Koerner, Nathan Frank, Sneha Polishetty 
+ *
+ * Semester:   Fall 2018
+ * Course:     CS400
+ * Lecture:    002 (Sneha, Wes) & 001 (Kiara, Teague, Nathan) 
+ * 
+ * Due Date:   Before 10pm on December 12, 2018
+ * Version:    1.0
+ * 
+ * Credits:    none
+ * 
+ * Bugs:       no known bugs, but not complete either
+ */
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -158,6 +173,13 @@ public class FoodData implements FoodDataADT<FoodItem> {
         indexes.get("protein").insert(foodItem.getNutrientValue("protein"), foodItem);
         indexes.get("carbohydrate").insert(foodItem.getNutrientValue("carbohydrate"), foodItem);
         indexes.get("fiber").insert(foodItem.getNutrientValue("fiber"), foodItem);
+	}
+	/*
+	 * (non-Javadoc)
+	 * @see skeleton.FoodDataADT#addFoodItem(skeleton.FoodItem)
+	 */
+	public void removeFoodItem(FoodItem foodItem) {
+		foodItemList.remove(foodItem);
 	}
 
 	/*
